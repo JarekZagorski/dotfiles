@@ -7,37 +7,39 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 local servers = {
-    clangd = {},
-    gopls = {},
-    pyright = {},
-    -- rust_analyzer = {},
-    tsserver = {},
-    robotframework_ls = {},
-    bashls = {},
-    marksman = {},
-
     lua_ls = {
-        Lua = {
-            workspace = { 
-                checkThirdParty = false,
-            },
-            telemetry = { enable = false },
-            library = {
-                vim.env.VIMRUNTIME,
-                -- "${3rd}/luv/library"
-                -- "${3rd}/busted/library",
-            }
-            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-            -- library = vim.api.nvim_get_runtime_file("", true)
-        },
     },
 }
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
+        'clangd',
+        'gopls',
+        'pyright',
+        'rust_analyzer',
+        'tsserver',
+        'robotframework_ls',
+        'bashls',
+        'marksman',
+        'nil_ls',
     },
     handlers = {
         lsp.default_setup,
+        lua_ls = function() 
+             require('lspconfig').example_server.setup({
+                workspace = { 
+                    checkThirdParty = false,
+                },
+                telemetry = { enable = false },
+                library = {
+                    vim.env.VIMRUNTIME,
+                    -- "${3rd}/luv/library"
+                    -- "${3rd}/busted/library",
+                }
+                -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+                -- library = vim.api.nvim_get_runtime_file("", true)
+            })
+        end
     },
 })

@@ -11,11 +11,11 @@
 import:
 #  - /path/to/alacritty.yml
 #  dracula colorscheme
-  - ~/.debian-config/alacritty/ubuntumonoNERD.yml
-  #- ~/.debian-config/alacritty/dracula.yml
-  #- ~/.debian-config/alacritty/nordic.yml
-  #- ~/.debian-config/alacritty/onedark.yml
-  - ~/.debian-config/alacritty/tokyo-night.yaml
+  #- ~/.config/alacritty/ubuntumonoNERD.yml
+  #- ~/.config/alacritty/dracula.yml
+  #- ~/.config/alacritty/nordic.yml
+  #- ~/.config/alacritty/onedark.yml
+  - ~/.config/alacritty/tokyo-night.yaml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -190,7 +190,7 @@ font:
 #draw_bold_text_with_bright_colors: false
 
 # Colors (Tomorrow Night)
-colors:
+# colors:
   # Default colors
   #primary:
     #background: '#1d1f21'
