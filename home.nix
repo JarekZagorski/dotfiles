@@ -1,21 +1,45 @@
 let
-  linkFile = { folder, path, recursive ? true } : 
-  let 
-    traceVal = v: builtins.trace v v;
-    oper = (traceVal "${path}/${folder}");
-    src = (traceVal (./dotfiles + "/${folder}"));
-  in
-  {
-     "${oper}" = { source = src; recursive = true; };
+  traceVal = v: builtins.trace v v;
+  mirrorSet = l: builtins.foldl' l (x: acc: acc // {"${x}" = x; }) {};
+  linkFile = { folder, path, recursive ? true } : {
+     "${path}" = { source = ./dotfiles/${folder}; recursive = recursive; };
   };
+  shellTheme = rec {
+    available = [
+      "Default" 
+      "Tokyonight-Dark-BL"
+    ];
+    name = builtins.elemAt available 1;
+    isCustom = name != builtins.elemAt available 0;
+    loadFiles = if isCustom then 
+      linkFile { folder = "themes/${name}"; path = ".themes/${name}"; }
+    else {};
+  };
+  
   # generates attrSet for adding to .config
-  addConfig = l: linkFile { folder = l; path = ".config"; };
+  addConfig = l: linkFile { folder = l; path = ".config/${l}"; };
 in { config, pkgs, lib, ... }: {
   home.username = "jordynski";
   home.homeDirectory = "/home/jordynski";
 
   dconf = {
     enable = true;
+    settings."org/gnome/shell/extensions/user-theme" = { 
+      name = shellTheme.name; 
+    };
+    settings."org/gnome/shell".enabled-extensions = [
+      "user-theme@gnome-shell-extensions.gcampax.github.com"
+    ];
+    settings."org/gnome/shell".disabled-extensions = [];
+    settings."org/gnome/desktop/interface" = {
+      icon-theme = "Tokyonight-Moon";
+    };
+    settings."org/gnome/desktop/background" = {
+      picture-uri = ".config/wallpapers/images/alx-colorful-clouds.png"; 
+      picture-options = "scaled";
+      primary-color = "000000";
+      secondary-color = "FFFFFF";
+    };
   };
 
   # link the configuration file in current directory to the specified location in home directory
@@ -61,6 +85,7 @@ in { config, pkgs, lib, ... }: {
     zellij
     fish
     gnome.dconf-editor
+    gnome.gnome-tweaks
 
     # programs
     nodejs_21
@@ -69,13 +94,16 @@ in { config, pkgs, lib, ... }: {
 
   # adding all dotfiles to .config/ does not work well
   # adding them one after another
-  home.file = 
-    addConfig "tmux" 
+  home.file = {} //
+    // addConfig "tmux" 
     // addConfig "fish" 
     // addConfig "zellij" 
     // addConfig "alacritty" 
     // addConfig "nvim" 
-    // linkFile { folder = "themes"; path = "."; }
+    // addConfig "wallpapers"
+    // linkFile { folder = "fonts"; path = ".fonts"; }
+    // linkFile { folder = "icons/Tokyonight-Moon"; path = ".icons/Tokyonight-Moon"; }
+    // shellTheme.loadFiles
   ;
 
   # basic configuration of git
