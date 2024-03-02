@@ -1,12 +1,22 @@
 let
-  # generates attrSet for adding to .config
-  addConfigFolder = { l, recursive ? true } : {
-      ".config/${l}" = { source = "./dotfiles/${l}"; recursive = recursive; };
+  linkFile = { folder, path, recursive ? true } : 
+  let 
+    traceVal = v: builtins.trace v v;
+    oper = (traceVal "${path}/${folder}");
+    src = (traceVal (./dotfiles + "/${folder}"));
+  in
+  {
+     "${oper}" = { source = src; recursive = true; };
   };
-  files = addConfigFolder { l="fish"; };
+  # generates attrSet for adding to .config
+  addConfig = l: linkFile { folder = l; path = ".config"; };
 in { config, pkgs, lib, ... }: {
   home.username = "jordynski";
   home.homeDirectory = "/home/jordynski";
+
+  dconf = {
+    enable = true;
+  };
 
   # link the configuration file in current directory to the specified location in home directory
   # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
@@ -25,9 +35,6 @@ in { config, pkgs, lib, ... }: {
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
-    # here is some command line tools I use frequently
-    # feel free to add your own or remove some of them
-
     neofetch
     nnn # terminal file manager
 
@@ -48,19 +55,28 @@ in { config, pkgs, lib, ... }: {
     # custom
     htop
     fish
-    zellij
 
-    # nivm dependencies
-    zig
-    gcc
+    # general utils
+    alacritty
+    zellij
+    fish
+    gnome.dconf-editor
+
+    # programs
+    nodejs_21
+    python3
   ];
 
   # adding all dotfiles to .config/ does not work well
   # adding them one after another
-  home.file."./.config/nvim/" = {
-    source = ./dotfiles/nvim;
-    recursive = true;
-  };
+  home.file = 
+    addConfig "tmux" 
+    // addConfig "fish" 
+    // addConfig "zellij" 
+    // addConfig "alacritty" 
+    // addConfig "nvim" 
+    // linkFile { folder = "themes"; path = "."; }
+  ;
 
   # basic configuration of git
   programs.git = {
@@ -69,39 +85,12 @@ in { config, pkgs, lib, ... }: {
     userEmail = "me.kubolski@gmail.com";
   };
 
-  # alacritty - a cross-platform, GPU-accelerated terminal emulator
-  programs.alacritty = {
-    enable = true;
-    # custom settings
-    settings = {
-      env.TERM = "xterm-256color";
-      font = {
-        size = 12;
-        draw_bold_text_with_bright_colors = true;
-      };
-      scrolling.multiplier = 5;
-      selection.save_to_clipboard = true;
-    };
-  };
-
-  programs.zellij = {
-    enable = true;
-  };
-
   programs.neovim = {
     viAlias = true;
     vimAlias = true;
     enable = true;
     defaultEditor = true;
     # unfortunately, treesitter needs to be configured the NixOS way
-  };
-
-  # environment.variables.EDITOR = "nvim";
-  # xdg.configFile.nvim.source = ./dotfiles/nvim;
-
-
-  programs.fish = {
-    enable = true;
   };
 
   # This value determines the home Manager release that your

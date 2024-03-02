@@ -7,4 +7,3 @@ fonts/.uuid
 tmux/*.log
 tmux/plugins
 nvim/lazy-lock.json
-themes

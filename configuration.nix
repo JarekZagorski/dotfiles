@@ -119,6 +119,13 @@
     curl
     wget
     fish
+
+    # basic packages
+    zig
+    gcc
+    cargo
+    go
+    lua
   ];
 
   # excluding some gnome programs
@@ -163,5 +170,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }
