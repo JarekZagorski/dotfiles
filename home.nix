@@ -1,31 +1,39 @@
 let
   traceVal = v: builtins.trace v v;
-  mirrorSet = l: builtins.foldl' l (x: acc: acc // {"${x}" = x; }) {};
-  linkFile = { folder, path, recursive ? true } : {
-     "${path}" = { source = ./dotfiles/${folder}; recursive = recursive; };
+  linkFile = { file, path, recursive ? false } : {
+     "${path}" = { source = ./dotfiles/${file}; recursive = recursive; };
   };
-  shellTheme = rec {
+  gnomeShellTheme = rec {
     available = [
       "Default" 
       "Tokyonight-Dark-BL"
     ];
     name = builtins.elemAt available 1;
     isCustom = name != builtins.elemAt available 0;
-    loadFiles = if isCustom then 
-      linkFile { folder = "themes/${name}"; path = ".themes/${name}"; }
+    loadFiles = if isCustom then
+      let libAdw = f: linkFile { 
+          file = "themes/${name}/${f}"; 
+          path = ".config/${f}";
+          recursive = false;
+      }; in
+      linkFile { file = "themes/${name}"; path = ".themes/${name}"; }
+      # libadwaita theme
+      // libAdw "gtk-4.0/gtk.css"
+      // libAdw "gtk-4.0/gtk-dark.css"
+      // libAdw "gtk-4.0/assets"
     else {};
   };
   
   # generates attrSet for adding to .config
-  addConfig = l: linkFile { folder = l; path = ".config/${l}"; };
-in { config, pkgs, lib, ... }: {
+  addConfig = l: linkFile { file = l; path = ".config/${l}"; };
+in { config, pkgs, lib, ... }: rec {
   home.username = "jordynski";
   home.homeDirectory = "/home/jordynski";
 
   dconf = {
     enable = true;
     settings."org/gnome/shell/extensions/user-theme" = { 
-      name = shellTheme.name; 
+      name = gnomeShellTheme.name; 
     };
     settings."org/gnome/shell".enabled-extensions = [
       "user-theme@gnome-shell-extensions.gcampax.github.com"
@@ -33,34 +41,21 @@ in { config, pkgs, lib, ... }: {
     settings."org/gnome/shell".disabled-extensions = [];
     settings."org/gnome/desktop/interface" = {
       icon-theme = "Tokyonight-Moon";
+      # theme for legacy apps
+      gtk-theme = gnomeShellTheme.name;
     };
     settings."org/gnome/desktop/background" = {
-      picture-uri = ".config/wallpapers/images/alx-colorful-clouds.png"; 
+      picture-uri-dark = traceVal "file://${home.homeDirectory}/.config/wallpapers/images/alx-colorful-clouds.png"; 
       picture-options = "scaled";
       primary-color = "000000";
-      secondary-color = "FFFFFF";
+      secondary-color = "000000";
     };
+    settings."org/gnome/mutter" = { dynamic-workspaces = true; };
+    settings."org/gnome/desktop/peripherals/touchpad" = { tap-to-click = true; };
   };
 
-  # link the configuration file in current directory to the specified location in home directory
-  # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
-
-  # link all files in `./scripts` to `~/.config/i3/scripts`
-  # home.file.".config/i3/scripts" = {
-  #   source = ./scripts;
-  #   recursive = true;   # link recursively
-  #   executable = true;  # make all files executable
-  # };
-
-  # encode the file content in nix configuration file directly
-  # home.file.".xxx".text = ''
-  #     xxx
-  # '';
-
-  # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
     neofetch
-    nnn # terminal file manager
 
     # archives
     zip
@@ -71,39 +66,38 @@ in { config, pkgs, lib, ... }: {
     fzf # A command-line fuzzy finder
 
     # nix related
-    #
     # it provides the command `nom` works just like `nix`
     # with more details log output
     nix-output-monitor
-
-    # custom
-    htop
-    fish
 
     # general utils
     alacritty
     zellij
     fish
     gnome.dconf-editor
-    gnome.gnome-tweaks
+    gnome.gnome-tweaks  # only for devtime
+    htop
 
-    # programs
+    # devtools
     nodejs_21
     python3
+    gnumake
+
+    # gaming
+    steam
   ];
 
-  # adding all dotfiles to .config/ does not work well
-  # adding them one after another
-  home.file = {} //
-    // addConfig "tmux" 
+  home.file = {}
     // addConfig "fish" 
+    // addConfig "nvim" 
+    // addConfig "tmux" 
     // addConfig "zellij" 
     // addConfig "alacritty" 
-    // addConfig "nvim" 
-    // addConfig "wallpapers"
-    // linkFile { folder = "fonts"; path = ".fonts"; }
-    // linkFile { folder = "icons/Tokyonight-Moon"; path = ".icons/Tokyonight-Moon"; }
-    // shellTheme.loadFiles
+    // addConfig "git/git_aliases.inc"
+    // linkFile rec { file = "fonts"; path = ".${file}"; }
+    // linkFile rec { file = "icons/Tokyonight-Moon"; path = ".${file}"; }
+    // linkFile rec { file = "wallpapers/images"; path = ".config/${file}"; recursive = true; }
+    // gnomeShellTheme.loadFiles
   ;
 
   # basic configuration of git
@@ -111,6 +105,11 @@ in { config, pkgs, lib, ... }: {
     enable = true;
     userName = "Jarek Zagorski";
     userEmail = "me.kubolski@gmail.com";
+    extraConfig = {
+        include = {
+            path = "${home.homeDirectory}/.config/git/git_aliases.inc";
+        };
+    };
   };
 
   programs.neovim = {
@@ -120,6 +119,11 @@ in { config, pkgs, lib, ... }: {
     defaultEditor = true;
     # unfortunately, treesitter needs to be configured the NixOS way
   };
+
+  # programs.firefox = {
+  #   profiles.jordynski = {
+  #   };
+  # };
 
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage

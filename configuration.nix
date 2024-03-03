@@ -139,7 +139,7 @@
     geary
     gnome-terminal
     gnome-music
-  ]);
+  ]) ++ (with pkgs; [ gnome-tour yelp ]);
 
   # basic programs setup
   programs.fish.enable = true;
