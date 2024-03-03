@@ -119,13 +119,10 @@
     curl
     wget
     fish
+    bash
 
     # basic packages
-    zig
     gcc
-    cargo
-    go
-    lua
   ];
 
   # excluding some gnome programs
@@ -140,6 +137,9 @@
     gnome-terminal
     gnome-music
   ]) ++ (with pkgs; [ gnome-tour yelp ]);
+
+  services.xserver.excludePackages = [ pkgs.xterm ];
+  services.xserver.desktopManager.xterm.enable = false;
 
   # basic programs setup
   programs.fish.enable = true;

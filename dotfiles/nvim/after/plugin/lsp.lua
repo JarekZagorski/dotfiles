@@ -6,11 +6,6 @@ lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
 end)
 
-local servers = {
-    lua_ls = {
-    },
-}
-
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
@@ -23,11 +18,13 @@ require('mason-lspconfig').setup({
         'bashls',
         'marksman',
         'nil_ls',
+        'lua_ls',
     },
     handlers = {
         lsp.default_setup,
+        --[[
         lua_ls = function() 
-             require('lspconfig').example_server.setup({
+             require('lspconfig').lua_ls.setup({
                 workspace = { 
                     checkThirdParty = false,
                 },
@@ -41,5 +38,6 @@ require('mason-lspconfig').setup({
                 -- library = vim.api.nvim_get_runtime_file("", true)
             })
         end
+        --]]
     },
 })
