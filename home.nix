@@ -65,7 +65,7 @@ in { config, pkgs, lib, ... }: rec {
     // addConfig "git/git_aliases.inc"
     // addConfigRec "fish" 
     // addConfigRec "nvim" 
-    // linkFile rec { file = "fonts"; path = ".${file}"; }
+    // linkFile rec { file = "fonts"; path = ".local/share/${file}"; }
     // linkFile rec { file = "icons/Tokyonight-Moon"; path = ".${file}"; }
     // linkFile rec { file = "wallpapers/images"; path = ".config/${file}"; recursive = true; }
     // gnomeConf.loadFiles
