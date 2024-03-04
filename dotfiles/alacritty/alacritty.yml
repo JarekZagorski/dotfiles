@@ -11,7 +11,7 @@
 import:
 #  - /path/to/alacritty.yml
 #  dracula colorscheme
-  #- ~/.config/alacritty/ubuntumonoNERD.yml
+  - ~/.config/alacritty/ubuntumonoNERD.yml
   #- ~/.config/alacritty/dracula.yml
   #- ~/.config/alacritty/nordic.yml
   #- ~/.config/alacritty/onedark.yml
