@@ -150,6 +150,15 @@ read if you used those and something break with a version upgrade you're on your
 @define-color shade_color rgba(0, 0, 0, 0.36);
 @define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
 
+/*
+* some custom changes to fix annoying bug, where sidedbars
+* on some gtk-4 apps are not themed
+@define-color sidebar_bg_color #501859;
+@define-color sidebar_backdrop_color #501859;
+
+didnt work xD
+* */
+
 /***************
  * Base States *
  ***************/

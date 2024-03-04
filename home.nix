@@ -1,19 +1,25 @@
 let
   traceVal = v: builtins.trace v v;
-  linkFile = { file, path, recursive ? false } : {
-     "${path}" = { source = ./dotfiles/${file}; recursive = recursive; };
-  };
+  dotfilesDir = "dotfiles";
   username = "jordynski";
   homeDir = "/home/${username}";
-  gnomeConf = import ./home/dconf.nix { homeDir = homeDir; };
+  gnomeConf = import ./home/dconf.nix { 
+    homeDir = homeDir; 
+    dotfilesDir = dotfilesDir; 
+  };
   # generates attrSet for adding to .config
-  addConfig = l: linkFile { file = l; path = ".config/${l}"; recursive = false; };
-  addConfigRec = l: linkFile { file = l; path = ".config/${l}"; recursive = true; };
+  linkFiles = targetDir: recursive: builtins.foldl' (acc: e: 
+    acc // { "${targetDir}/${e}" = {
+        source = ./${dotfilesDir}/${e}; 
+        recursive = recursive;
+        target = "${targetDir}/${e}";
+    };}
+  ) {};
 in { config, pkgs, lib, ... }: rec {
   home.username = username;
   home.homeDirectory = homeDir;
 
-  dconf = gnomeConf.dconf;
+  dconf = gnomeConf.dconf lib;
 
   home.packages = with pkgs; [
     neofetch
@@ -39,13 +45,16 @@ in { config, pkgs, lib, ... }: rec {
     gnome.gnome-tweaks  # only for devtime TODO: remove
     htop
     file
-    patchelf
+    spotify
+
+    # for proper application of themes
+    gnome.gnome-themes-extra
+    gtk-engine-murrine
 
     # devtools
     nodejs_21
     python3
     gnumake
-    dos2unix  # changes endlines to conform with unix spec
     zig
     cargo
     go
@@ -56,20 +65,24 @@ in { config, pkgs, lib, ... }: rec {
 
     # system stuff
     nix-index
+    patchelf
   ];
 
   home.file = {}
-    // addConfig "tmux" 
-    // addConfig "zellij" 
-    // addConfig "alacritty" 
-    // addConfig "git/git_aliases.inc"
-    // addConfigRec "fish" 
-    // addConfigRec "nvim" 
-    // linkFile rec { file = "fonts"; path = ".local/share/${file}"; }
-    // linkFile rec { file = "icons/Tokyonight-Moon"; path = ".${file}"; }
-    // linkFile rec { file = "wallpapers/images"; path = ".config/${file}"; recursive = true; }
+    // (let linkConfig = linkFiles ".config"; in
+      linkConfig false [
+        "tmux"
+        "zellij" 
+        "alacritty"
+        "git/git_aliases.inc"
+      ] 
+      // linkConfig true [ "fish" "nvim" ]
+    )
+    // linkFiles ".local/share" false [ "fonts" ]
     // gnomeConf.loadFiles
   ;
+
+  home.sessionVariables = { EDITOR = "nvim"; };
 
   # basic configuration of git
   programs.git = {
@@ -92,7 +105,7 @@ in { config, pkgs, lib, ... }: rec {
   };
 
   # programs.firefox = {
-  #   profiles.jordynski = {
+  #   profiles.${username} = {
   #   };
   # };
 

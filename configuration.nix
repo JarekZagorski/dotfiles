@@ -137,6 +137,7 @@
     geary
     gnome-terminal
     gnome-music
+    gnome-weather
   ]) ++ (with pkgs; [ gnome-tour yelp ]);
 
   services.xserver.excludePackages = [ pkgs.xterm ];
