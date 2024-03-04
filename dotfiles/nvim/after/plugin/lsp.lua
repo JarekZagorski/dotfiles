@@ -16,13 +16,14 @@ require('mason-lspconfig').setup({
         'tsserver',
         'robotframework_ls',
         'bashls',
-        'marksman',
         'nil_ls',
         'lua_ls',
+        'marksman',
     },
+
     handlers = {
         lsp.default_setup,
-        --[[
+        ---[[
         lua_ls = function() 
              require('lspconfig').lua_ls.setup({
                 workspace = { 

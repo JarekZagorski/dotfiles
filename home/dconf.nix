@@ -1,3 +1,6 @@
+let 
+    traceVal = v: builtins.trace v v;
+in
 { homeDir } : rec {
     gnomeTheme = rec {
         available = [
@@ -12,7 +15,7 @@
             source = ../dotfiles/themes/${gnomeTheme.name}/${f};
             recursive = false;
         };}; in
-        { ".theme/${gnomeTheme.name}" = {
+        { ".themes/${gnomeTheme.name}" = {
             source = ../dotfiles/themes/${gnomeTheme.name};
             recursive = false;
         };}

@@ -4,14 +4,14 @@ let
      "${path}" = { source = ./dotfiles/${file}; recursive = recursive; };
   };
   username = "jordynski";
-  home = "/home/${username}";
-  gnomeConf = import ./home/dconf.nix { homeDir = home; };
+  homeDir = "/home/${username}";
+  gnomeConf = import ./home/dconf.nix { homeDir = homeDir; };
   # generates attrSet for adding to .config
   addConfig = l: linkFile { file = l; path = ".config/${l}"; recursive = false; };
   addConfigRec = l: linkFile { file = l; path = ".config/${l}"; recursive = true; };
 in { config, pkgs, lib, ... }: rec {
   home.username = username;
-  home.homeDirectory = home;
+  home.homeDirectory = homeDir;
 
   dconf = gnomeConf.dconf;
 
@@ -36,7 +36,7 @@ in { config, pkgs, lib, ... }: rec {
     zellij
     fish
     gnome.dconf-editor
-    gnome.gnome-tweaks  # only for devtime
+    gnome.gnome-tweaks  # only for devtime TODO: remove
     htop
     file
     patchelf
@@ -46,15 +46,16 @@ in { config, pkgs, lib, ... }: rec {
     python3
     gnumake
     dos2unix  # changes endlines to conform with unix spec
-    go
     zig
     cargo
-
-    # libs
-    zlib
+    go
+    marksman
 
     # gaming
     steam
+
+    # system stuff
+    nix-index
   ];
 
   home.file = {}

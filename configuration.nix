@@ -123,6 +123,7 @@
 
     # basic packages
     gcc
+    zlib
   ];
 
   # excluding some gnome programs
