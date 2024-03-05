@@ -59,6 +59,8 @@ in { config, pkgs, lib, ... }: rec {
     cargo
     go
     marksman
+    lua
+    luarocks
 
     # gaming
     steam
