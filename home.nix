@@ -40,12 +40,14 @@ in { config, pkgs, lib, ... }: rec {
     # general utils
     alacritty
     zellij
-    fish
     gnome.dconf-editor
     gnome.gnome-tweaks  # only for devtime TODO: remove
     htop
     file
     spotify
+
+    # for uni
+    texliveTeTeX
 
     # for proper application of themes
     gnome.gnome-themes-extra
@@ -68,6 +70,7 @@ in { config, pkgs, lib, ... }: rec {
     # system stuff
     nix-index
     patchelf
+    any-nix-shell  # nix-shell custom shells
   ];
 
   home.file = {}
@@ -104,6 +107,13 @@ in { config, pkgs, lib, ... }: rec {
     enable = true;
     defaultEditor = true;
     # unfortunately, treesitter needs to be configured the NixOS way
+  };
+
+  programs.fish = {
+      enable = true;
+      shellAliases = {
+          ns = "nix-shell --run fish";
+      };
   };
 
   # programs.firefox = {
