@@ -98,6 +98,9 @@ in { config, pkgs, lib, ... }: rec {
         include = {
             path = "${home.homeDirectory}/.config/git/git_aliases.inc";
         };
+        core = {
+            editor="vim";
+        };
     };
   };
 
