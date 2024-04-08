@@ -5,7 +5,7 @@ layout_dir "/home/jakub/.config/zellij/layouts"
 
 theme "tokyo-night-custom"
 on_force_close "quit"
-default_layout "zjstatus_test"
+// default_layout "zjstatus_test"
 
 keybinds clear-defaults=true {
     normal {
