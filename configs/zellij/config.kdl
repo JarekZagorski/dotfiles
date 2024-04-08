@@ -1,6 +1,6 @@
 //copy_on_select false
-theme_dir "/home/jordynski/.config/zellij/themes"
-layout_dir "/home/jordynski/.config/zellij/layouts"
+theme_dir "/home/jakub/.config/zellij/themes"
+layout_dir "/home/jakub/.config/zellij/layouts"
 // layout_dir "/home/jordynski/nixos-config/dotfiles/zellij/layouts"
 
 theme "tokyo-night-custom"

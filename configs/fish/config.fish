@@ -18,4 +18,6 @@ set LESS -r
 source /home/jakub/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
 
 # from any-nix-shell
-any-nix-shell fish --info-right | source
+if type -q any-nix-shell 
+    any-nix-shell fish --info-right | source
+end

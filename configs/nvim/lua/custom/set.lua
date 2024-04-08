@@ -28,6 +28,7 @@ o.isfname:append('@-@')
 o.updatetime = 50
 
 o.colorcolumn = "120"
+o.background = 'dark'
 
 vim.g.mapleader = ' '
 

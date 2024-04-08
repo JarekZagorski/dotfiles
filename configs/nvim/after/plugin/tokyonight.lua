@@ -1,6 +1,7 @@
 ---@diagnostic disable: missing-fields
 require("tokyonight").setup({
 	style = 'night',
+    ligt_style = 'day',
 	transparent = false,
 	styles = {
 		-- Style to be applied to different syntax groups

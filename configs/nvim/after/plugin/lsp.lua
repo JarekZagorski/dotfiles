@@ -16,7 +16,6 @@ require('mason-lspconfig').setup({
         'tsserver',
         'robotframework_ls',
         'bashls',
-        'nil_ls',
         'lua_ls',
         'marksman',
     },
