@@ -6,7 +6,7 @@ return {
 			local configs = require("nvim-treesitter.configs")
             ---@diagnostic disable: missing-fields
 			configs.setup({
-				ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", 'go', 'javascript', 'typescript' },
+				ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "javascript", "html", 'go', 'javascript', 'typescript' },
 				sync_install = false,
 				highlight = { enable = true },
 				indent = { enable = true },
