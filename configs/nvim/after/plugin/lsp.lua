@@ -18,6 +18,7 @@ require('mason-lspconfig').setup({
         'bashls',
         'lua_ls',
         'marksman',
+        'templ',
     },
 
     handlers = {
