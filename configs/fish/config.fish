@@ -21,3 +21,8 @@ source /home/jakub/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
 if type -q any-nix-shell 
     any-nix-shell fish --info-right | source
 end
+
+# for .dotnet completions
+complete -f -c dotnet -a "(dotnet complete (commandline -cp))"
+# fuck telemetry
+set -U DOTNET_CLI_TELEMETRY_OPTOUT 1
