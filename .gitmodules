@@ -1,3 +1,6 @@
 [submodule "themes/libadwaita-theme-changer"]
 	path = themes/libadwaita-theme-changer
 	url = git@github.com:JarekZagorski/libadwaita-theme-changer.git
+[submodule "configs/alacritty/alacritty-theme"]
+	path = configs/alacritty/alacritty-theme
+	url = https://github.com/alacritty/alacritty-theme.git

@@ -1,12 +1,12 @@
+live_config_reload = true
 import = [
     "~/.config/alacritty/ubuntumonoNERD.toml", 
-    "~/.config/alacritty/themes/tokyonight_day.toml"
+    "~/.config/alacritty/alacritty-auto-theme/theme.toml"
 ]
-live_config_reload = true
 ipc_socket = true
 
 [font]
-size = 14.0
+size = 15.0
 
 [[keyboard.bindings]]
 action = "ToggleFullscreen"
