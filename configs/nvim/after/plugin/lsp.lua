@@ -12,7 +12,7 @@ lsp.on_attach(on_attach)
 local templ_format = function()
     local bufnr = vim.api.nvim_get_current_buf()
     local filename = vim.api.nvim_buf_get_name(bufnr)
-    local cmd = "templ fmt " .. vim.fn.shellescape(filename)
+    local cmd = 'TEMPL_EXPERIMENT=rawgo templ fmt ' .. vim.fn.shellescape(filename)
 
     vim.fn.jobstart(cmd, {
         on_exit = function()
@@ -44,7 +44,6 @@ require('mason-lspconfig').setup({
 
     handlers = {
         lsp.default_setup,
-        ---[[
         lua_ls = function()
             require('lspconfig').lua_ls.setup({
                 workspace = {
@@ -60,13 +59,14 @@ require('mason-lspconfig').setup({
                 -- library = vim.api.nvim_get_runtime_file("", true)
             })
         end,
-        --]]
         templ = function()
             require 'lspconfig'.templ.setup({
                 on_attach = function(client, bufnr)
                     vim.keymap.set('n', '<F3>', templ_format, { buffer = bufnr, remap = false })
                     on_attach(client, bufnr)
                 end,
+                cmd = { 'templ', 'lsp' },
+                cmd_env = { TEMPL_EXPERIMENT = 'rawgo'; TEST="false" }
             })
         end,
         htmx = function()
@@ -77,3 +77,5 @@ require('mason-lspconfig').setup({
         end,
     },
 })
+
+

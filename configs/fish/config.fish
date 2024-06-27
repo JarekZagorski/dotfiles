@@ -9,9 +9,9 @@ end
 
 alias vim "nvim"
 alias exercism "~/programs/exercism/bin/exercism"
+set TEMPL_EXPERIMENT rawgo 
 
 # meaningless comment
-
 set LESS -r
 
 # opam configuration
