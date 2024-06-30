@@ -1,13 +1,22 @@
+local function workspace()
+    if vim.loop.os_gethostname() == 'voidlinux' then
+        return {
+            name = "personal-laptop",
+            path = "~/syncthing/Master Notes Vault",
+        }
+    else
+        return {
+            name = "personal",
+            path = "~/syncthing/master-notes-vault",
+        }
+    end
+end
+
 require 'obsidian'.setup({
-    workspaces = {
-      {
-        name = "personal",
-        path = "~/syncthing/master-notes-vault",
-      },
-    },
+    workspaces = { workspace() },
     ui = {
-        enable = true,      -- set to false to disable all additional syntax features
-        update_debounce = 200, -- update delay after a text change (in milliseconds)
+        enable = true,          -- set to false to disable all additional syntax features
+        update_debounce = 200,  -- update delay after a text change (in milliseconds)
         max_file_length = 5000, -- disable UI features for files with more than this many lines
         -- Define how various check-boxes are displayed
         checkboxes = {
