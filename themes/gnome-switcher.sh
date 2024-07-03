@@ -22,4 +22,3 @@ fi
 # Download this script and paste it in ~/.themes
 # Make it executable by chmod +x
 # Use the theme name that you want
-# https://ibb.co/dJJw1vy
