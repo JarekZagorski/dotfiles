@@ -30,7 +30,6 @@ require('mason-lspconfig').setup({
         'clangd',
         'gopls',
         'pyright',
-        'rust_analyzer',
         'tsserver',
         'robotframework_ls',
         'bashls',
