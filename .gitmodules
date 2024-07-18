@@ -1,3 +1,3 @@
-[submodule "themes/libadwaita-theme-changer"]
-	path = themes/libadwaita-theme-changer
+[submodule "themes/dot-themes/libadwaita-theme-changer"]
+	path = themes/dot-themes/libadwaita-theme-changer
 	url = git@github.com:JarekZagorski/libadwaita-theme-changer.git
