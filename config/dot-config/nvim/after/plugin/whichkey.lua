@@ -15,57 +15,36 @@ vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
 local mark = require('harpoon.mark')
 local ui = require('harpoon.ui')
 
--- vim.keymap.set('n', '<leader>a', mark.add_file)
--- vim.keymap.set('n', '<C-e>', ui.toggle_quick_menu)
--- vim.keymap.set('n', '<C-h>', function() ui.nav_file(1) end)
--- vim.keymap.set('n', '<C-j>', function() ui.nav_file(2) end)
--- vim.keymap.set('n', '<C-k>', function() ui.nav_file(3) end)
--- vim.keymap.set('n', '<C-l>', function() ui.nav_file(4) end)
 
 -- <leader> segment
-wk.register({
-    p = {
-        name = 'Project',
-        v = { '<cmd>Neotree position=current <cr>', 'View' },
-    },
-    f = {
-        name = 'File',
-        f = { telescope.find_files, 'File List' },
-        g = { telescope.live_grep, 'File Grep' },
-    },
-    a = { mark.add_file, 'Harpoon: add file' },
-    y = { 'V"+y', 'Yank line to clipboard' },
-}, { prefix = '<leader>' })
-
--- Ctrl based segment
-wk.register({
-    ['<C-h>'] = { lib.wrap(ui.nav_file, 1), 'Harpoon: file 1' },
-    ['<C-j>'] = { lib.wrap(ui.nav_file, 2), 'Harpoon: file 2' },
-    ['<C-k>'] = { lib.wrap(ui.nav_file, 3), 'Harpoon: file 3' },
-    ['<C-l>'] = { lib.wrap(ui.nav_file, 4), 'Harpoon: file 4' },
-    ['<C-e>'] = { ui.toggle_quick_menu, 'Harpoon: open menu' },
+wk.add({
+    { "<leader>f",  group = "File", },
+    { "<leader>ff", telescope.find_files,                 desc = "File List" },
+    { "<leader>fg", telescope.live_grep,                  desc = "File Grep" },
+    { "<leader>p",  group = "Project", },
+    { "<leader>pv", "<cmd>Neotree position=current <cr>", desc = "View" },
+    { "<leader>y",  'V"+y',                               desc = "Yank line to clipboard" },
 })
 
--- visual segment
-wk.register({
+-- Harpoon mappings
+vim.keymap.set('n', '<leader>a', mark.add_file, { desc = 'Harpoon: add file' })
+vim.keymap.set('n', '<C-e>', ui.toggle_quick_menu, { desc = 'Harpoon: open menu' })
+vim.keymap.set('n', '<C-h>', function() ui.nav_file(1) end, { desc = 'Harpoon: file 1' })
+vim.keymap.set('n', '<C-j>', function() ui.nav_file(2) end, { desc = 'Harpoon: file 2' })
+vim.keymap.set('n', '<C-k>', function() ui.nav_file(3) end, { desc = 'Harpoon: file 3' })
+vim.keymap.set('n', '<C-l>', function() ui.nav_file(4) end, { desc = 'Harpoon: file 4' })
 
-}, { mode = 'v' })
-
--- lsp-zero descriptions
-wk.register({
-    K = { vim.lsp.buf.hover, 'Display Hover Information' },
-    g = {
-        d = {vim.lsp.buf.definition, 'Jump to definition' },
-        D = {vim.lsp.buf.declaration, 'Jump to Declaration' },
-        i = {vim.lsp.buf.implementation, 'List implementations' },
-        o = {vim.lsp.buf.type_definition, 'Jump to type definition' },
-        r = {vim.lsp.buf.references, 'List all references' },
-        s = {vim.lsp.buf.signature_help, 'Display signature information' },
-        l = {vim.diagnostic.open_float, 'Show Diagnostics' },
-    },
-    ['<F2>'] = {vim.lsp.buf.rename, 'Rename' },
-    ['<F3>'] = {vim.lsp.buf.format, 'Format buffer using attached lsp'},
-    ['<F4>'] = {vim.lsp.buf.code_action, 'Code action'},
-    ['[d']   = {vim.diagnostic.goto_prev, 'Previous diagnostics'},
-    [']d']   = {vim.diagnostic.goto_next, 'Next diagnostics'},
-}, { mode = 'n' })
+-- lsp mappings
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Display Hover Information' })
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Jump to definition' })
+vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'Jump to Declaration' })
+vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = 'List implementations' })
+vim.keymap.set('n', 'go', vim.lsp.buf.type_definition, { desc = 'Jump to type definition' })
+vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'List all references' })
+vim.keymap.set('n', 'gs', vim.lsp.buf.signature_help, { desc = 'Display signature information' })
+vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = 'Show Diagnostics' })
+vim.keymap.set('n', '<F2>', vim.lsp.buf.rename, { desc = 'Rename' })
+vim.keymap.set('n', '<F3>', vim.lsp.buf.format, { desc = 'Format buffer using attached lsp' })
+vim.keymap.set('n', '<F4>', vim.lsp.buf.code_action, { desc = 'Code action' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous diagnostics' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostics' })
