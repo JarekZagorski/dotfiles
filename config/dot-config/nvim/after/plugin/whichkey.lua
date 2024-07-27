@@ -22,7 +22,6 @@ nmap('<leader>gs', vim.cmd.Git, 'Git Fugitive: git status')
 local mark = require('harpoon.mark')
 local harpoon_ui = require('harpoon.ui')
 
-
 nmap('<leader>a', mark.add_file)
 nmap('<C-e>', harpoon_ui.toggle_quick_menu, 'Harpoon: Toggle quick menu')
 nmap('<C-h>', function() harpoon_ui.nav_file(1) end, 'Harpoon: file 1')

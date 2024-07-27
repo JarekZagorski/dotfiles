@@ -1,4 +1,5 @@
 live_config_reload = true
+
 import = [
     "~/.config/alacritty/ubuntumonoNERD.toml", 
     "~/.config/alacritty/alacritty-auto-theme/theme.toml"
