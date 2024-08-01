@@ -6,7 +6,6 @@ local function on_attach(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
 end
 
-
 lsp.on_attach(on_attach)
 
 local templ_format = function()
@@ -65,7 +64,7 @@ require('mason-lspconfig').setup({
                     on_attach(client, bufnr)
                 end,
                 cmd = { 'templ', 'lsp' },
-                cmd_env = { TEMPL_EXPERIMENT = 'rawgo'; TEST="false" }
+                cmd_env = { TEMPL_EXPERIMENT = 'rawgo', TEST = "false" }
             })
         end,
         htmx = function()
@@ -76,5 +75,3 @@ require('mason-lspconfig').setup({
         end,
     },
 })
-
-

@@ -46,8 +46,9 @@ cmp.setup({
         -- ... Your other mappings ...
     },
 
-    preselect = 'None'
-
-
+    preselect = 'None',
     -- ... Your other configuration ...
+    sources = cmp.config.sources({
+        { name = "neorg" },
+    })
 })
