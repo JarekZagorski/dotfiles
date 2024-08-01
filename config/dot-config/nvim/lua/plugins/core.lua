@@ -15,7 +15,6 @@ return {
 	},
 	'nvim-treesitter/playground',
 	'ThePrimeagen/harpoon',
-	'mbbill/undotree',
 	'tpope/vim-fugitive',
 	{
 		"nvim-neo-tree/neo-tree.nvim",

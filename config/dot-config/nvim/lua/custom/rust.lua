@@ -48,6 +48,7 @@ local opts = {
     },
 }
 
+--[[
 require("rust-tools").setup(opts)
 
 -- Setup Completion
@@ -84,3 +85,5 @@ cmp.setup({
         { name = "buffer" },
     },
 })
+--]]
+

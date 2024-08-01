@@ -1,5 +1,0 @@
-local settings = {
-
-}
-
-return settings

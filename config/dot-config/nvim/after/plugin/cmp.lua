@@ -4,6 +4,7 @@ local has_words_before = function()
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+
 local luasnip = require("luasnip")
 local cmp = require("cmp")
 
@@ -16,7 +17,19 @@ cmp.setup({
     -- ... Your other configuration ...
 
     mapping = {
-        ["<CR>"] = cmp.mapping.confirm { select = true },
+        ["<CR>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                if luasnip.expandable() then
+                    luasnip.expand()
+                else
+                    cmp.confirm({
+                        select = true,
+                    })
+                end
+            else
+                fallback()
+            end
+        end),
         -- ... Your other mappings ...
 
         ["<Tab>"] = cmp.mapping(function(fallback)
@@ -50,5 +63,9 @@ cmp.setup({
     -- ... Your other configuration ...
     sources = cmp.config.sources({
         { name = "neorg" },
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+        { name = "buffer" },
     })
 })
+

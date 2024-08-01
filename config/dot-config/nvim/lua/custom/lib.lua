@@ -17,11 +17,11 @@ function M.run_in_terminal (cmd)
     end
 end
 
----@param pointer function
-function M.wrap (pointer, ...)
+---@param fn function
+function M.wrap (fn, ...)
     local arg = {...}
     return function ()
-        pointer(unpack(arg))
+        fn(unpack(arg))
     end
 end
 
