@@ -8,7 +8,6 @@ function ..
 end
 
 alias vim "nvim"
-alias exercism "~/programs/exercism/bin/exercism"
 set TEMPL_EXPERIMENT rawgo 
 
 set LESS -r
