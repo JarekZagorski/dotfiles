@@ -3,6 +3,7 @@ return {
     {
         'ThePrimeagen/vim-be-good',
     },
+    --[
     {
         "folke/noice.nvim",
         event = "VeryLazy",
@@ -34,4 +35,5 @@ return {
             "rcarriga/nvim-notify",
         }
     }
+    --]]
 }
