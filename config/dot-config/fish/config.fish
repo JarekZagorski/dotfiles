@@ -16,3 +16,8 @@ set LESS -r
 if type -q any-nix-shell 
     any-nix-shell fish --info-right | source
 end
+
+set DOTNET_CLI_TELEMETRY_OPTOUT 'true'
+
+source "$HOME/.cargo/env.fish"  # For fish
+
