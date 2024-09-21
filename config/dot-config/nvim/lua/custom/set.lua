@@ -16,9 +16,6 @@ o.wrap = false
 o.hlsearch = false
 o.incsearch = true
 
-o.hlsearch = false
-o.incsearch = true
-
 o.termguicolors = true
 
 o.scrolloff = 12

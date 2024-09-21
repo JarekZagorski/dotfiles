@@ -17,14 +17,6 @@ function M.run_in_terminal (cmd)
     end
 end
 
----@param fn function
-function M.wrap (fn, ...)
-    local arg = {...}
-    return function ()
-        fn(unpack(arg))
-    end
-end
-
 -- Turns vim key combination into command
 ---@param keys string
 function M.keycomb_to_command(keys)
