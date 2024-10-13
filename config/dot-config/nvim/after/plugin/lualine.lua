@@ -1,5 +1,3 @@
-local mode = require 'lualine.components.diff'
-
 require('lualine').setup {
     options = {
         icons_enabled = true,
@@ -27,7 +25,7 @@ require('lualine').setup {
             cond = function()
                 return vim.fn.reg_recording() ~= ''
             end,
-        } },
+        }, },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
         lualine_c = { 'filename' },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
@@ -42,8 +40,8 @@ require('lualine').setup {
         lualine_y = {},
         lualine_z = {}
     },
-    tabline = {},
-    winbar = {},
-    inactive_winbar = {},
+    tabline = { },
+    winbar = { },
+    inactive_winbar = { },
     extensions = {}
 }
