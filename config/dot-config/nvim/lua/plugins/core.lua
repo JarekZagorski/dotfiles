@@ -3,7 +3,6 @@ return {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
     },
-    'nvim-treesitter/playground',
     {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
@@ -31,5 +30,6 @@ return {
     {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
+        config = true,
     },
 }

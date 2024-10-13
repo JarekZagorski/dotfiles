@@ -6,6 +6,7 @@ local set = vim.keymap.set
 --set('n', '<C-p>', telescope.git_files, {})
 -- Fugitive
 set('n', '<leader>gs', vim.cmd.Git, { desc = 'Git Fugitive: git status' })
+-- set('n', '<leader>gc', vim.cmd.Git, { desc = 'Git Fugitive: git status' })
 -- <leader> segment
 set('n', '<leader>ff', telescope.find_files, { desc = 'Find File' })
 set('n', '<leader>fg', telescope.live_grep, { desc = 'File Grep' })
