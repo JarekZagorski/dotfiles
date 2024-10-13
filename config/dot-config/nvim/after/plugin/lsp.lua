@@ -1,3 +1,4 @@
+--[[
 local lsp = require('lsp-zero')
 
 local function on_attach(client, bufnr)
@@ -7,6 +8,7 @@ local function on_attach(client, bufnr)
 end
 
 lsp.on_attach(on_attach)
+--]]
 
 local templ_format = function()
     local bufnr = vim.api.nvim_get_current_buf()
@@ -26,21 +28,14 @@ end
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
-        'clangd',
-        'gopls',
-        'pyright',
-        'robotframework_ls',
         'bashls',
         'lua_ls',
-        'marksman',
-        'templ',
-        'html',
-        'htmx',
-        'cssls',
     },
 
     handlers = {
-        lsp.default_setup,
+        function(server)
+            require('lspconfig')[server].setup({})
+        end,
         lua_ls = function()
             require('lspconfig').lua_ls.setup({
                 workspace = {
@@ -60,7 +55,6 @@ require('mason-lspconfig').setup({
             require 'lspconfig'.templ.setup({
                 on_attach = function(client, bufnr)
                     vim.keymap.set('n', '<F3>', templ_format, { buffer = bufnr, remap = false })
-                    on_attach(client, bufnr)
                 end,
                 cmd = { 'templ', 'lsp' },
                 cmd_env = { TEMPL_EXPERIMENT = 'rawgo', TEST = "false" }
@@ -68,7 +62,6 @@ require('mason-lspconfig').setup({
         end,
         htmx = function()
             require 'lspconfig'.htmx.setup({
-                on_attach = on_attach,
                 filetypes = { 'templ' }
             })
         end,

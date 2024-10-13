@@ -10,15 +10,10 @@ cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine
         expand = function(args)
-            -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
             require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-            -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-            -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
             --vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
         end,
     },
-
-
 
     -- ... Your other configuration ...
 
@@ -36,7 +31,7 @@ cmp.setup({
         ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
-            -- elseif vim.snippet.active({ direction = 1 }) then
+                -- elseif vim.snippet.active({ direction = 1 }) then
             elseif luasnip.locally_jumpable(1) then
                 -- vim.snippet.jump(1)
                 luasnip.jump(1)
@@ -48,7 +43,7 @@ cmp.setup({
         ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
-            --elseif vim.snippet.active({ direction = -1 }) then
+                --elseif vim.snippet.active({ direction = -1 }) then
             elseif luasnip.locally_jumpable(-1) then
                 -- vim.snippet.jump(-1)
                 luasnip.jump(1)
@@ -56,7 +51,6 @@ cmp.setup({
                 fallback()
             end
         end, { "i", "s" }),
-
         -- ... Your other mappings ...
     },
 
