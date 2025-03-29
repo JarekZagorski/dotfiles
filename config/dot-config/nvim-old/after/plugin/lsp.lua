@@ -43,7 +43,7 @@ require('mason-lspconfig').setup({
                 },
                 telemetry = { enable = false },
                 library = {
-                    vim.env.VIMRUNTIME,
+                    -- vim.env.VIMRUNTIME,
                     -- "${3rd}/luv/library"
                     -- "${3rd}/busted/library",
                 }
@@ -67,6 +67,7 @@ require('mason-lspconfig').setup({
         end,
     },
 })
+
 -- If you want insert `(` after select function or method item
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require('cmp')
