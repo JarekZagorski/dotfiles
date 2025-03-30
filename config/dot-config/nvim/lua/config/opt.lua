@@ -21,3 +21,6 @@ vim.opt.signcolumn = 'yes:1'
 
 -- save swap file more often
 vim.opt.updatetime = 1000
+
+-- some better stuff for default completion window
+vim.cmd[[set completeopt+=menuone,noselect,popup]]
