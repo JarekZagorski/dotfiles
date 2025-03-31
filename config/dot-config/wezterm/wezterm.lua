@@ -45,11 +45,11 @@ local wallpapers = {
 local function get_background(appearance)
     local data = wallpapers[utils.get_os()][appearance]
     return {
-        {
-            source = {
-                File = data.image,
-            },
-        },
+        -- {
+        --     source = {
+        --         File = data.image,
+        --     },
+        -- },
         {
             source = {
                 Color = data.overlay,
