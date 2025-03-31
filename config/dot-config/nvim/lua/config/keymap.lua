@@ -31,3 +31,18 @@ vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format, { desc = 'Code Format buff
 vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code action' })
 vim.keymap.set('n', '[d', diagnostic_jump { count = -1, float = true }, { desc = 'Previous diagnostics' })
 vim.keymap.set('n', ']d', diagnostic_jump { count = 1, float = true }, { desc = 'Next diagnostics' })
+
+-- harpoon
+local harpoon = require'harpoon'
+
+-- required
+harpoon:setup()
+
+vim.keymap.set('n', '<leader>a', function () harpoon:list():add() end)
+vim.keymap.set('n', '<C-e>', function () harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+vim.keymap.set('n', '<C-h>', function () harpoon:list():select(1) end)
+vim.keymap.set('n', '<C-j>', function () harpoon:list():select(2) end)
+vim.keymap.set('n', '<C-k>', function () harpoon:list():select(3) end)
+vim.keymap.set('n', '<C-l>', function () harpoon:list():select(4) end)
+
