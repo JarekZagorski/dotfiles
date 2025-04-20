@@ -9,60 +9,60 @@
 local cmp = require 'cmp'
 
 local completion_mapping = {
-    ['<CR>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-            cmp.confirm({
-                select = true,
-            })
-        else
-            fallback()
-        end
-    end),
+  ['<CR>'] = cmp.mapping(function(fallback)
+    if cmp.visible() then
+      cmp.confirm({
+        select = true,
+      })
+    else
+      fallback()
+    end
+  end),
 
-    ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-            cmp.select_next_item()
-        elseif vim.snippet.active({ direction = 1 }) then
-            vim.snippet.jump(1)
-        else
-            fallback()
-        end
-    end, { "i", "s" }),
+  ["<Tab>"] = cmp.mapping(function(fallback)
+    if cmp.visible() then
+      cmp.select_next_item()
+    elseif vim.snippet.active({ direction = 1 }) then
+      vim.snippet.jump(1)
+    else
+      fallback()
+    end
+  end, { "i", "s" }),
 
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-            cmp.select_prev_item()
-        elseif vim.snippet.active({ direction = -1 }) then
-            vim.snippet.jump(-1)
-        else
-            fallback()
-        end
-    end, { "i", "s" }),
-    -- ... Your other mappings ...
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    -- ['<C-e>'] = cmp.mapping.abort(),
+  ["<S-Tab>"] = cmp.mapping(function(fallback)
+    if cmp.visible() then
+      cmp.select_prev_item()
+    elseif vim.snippet.active({ direction = -1 }) then
+      vim.snippet.jump(-1)
+    else
+      fallback()
+    end
+  end, { "i", "s" }),
+  -- ... Your other mappings ...
+  ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+  ['<C-f>'] = cmp.mapping.scroll_docs(4),
+  ['<C-Space>'] = cmp.mapping.complete(),
+  -- ['<C-e>'] = cmp.mapping.abort(),
 }
 
 cmp.setup({
-    snippet = {
-        -- REQUIRED - you must specify a snippet engine
-        expand = function(args)
-            vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
-        end,
-    },
-    window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
-    },
-    -- mapping = cmp.mapping.preset.insert({ -- if defaults are indeed wanted
-    mapping = completion_mapping,
-    sources = cmp.config.sources(
-        { { name = 'nvim_lsp' } },
-        { { name = 'buffer' } }
-    ),
-    -- preselect = 'None',
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      vim.snippet.expand(args.body)       -- For native neovim snippets (Neovim v0.10+)
+    end,
+  },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
+  -- mapping = cmp.mapping.preset.insert({ -- if defaults are indeed wanted
+  mapping = completion_mapping,
+  sources = cmp.config.sources(
+    { { name = 'nvim_lsp' } },
+    { { name = 'buffer' } }
+  ),
+  -- preselect = 'None',
 })
 
 

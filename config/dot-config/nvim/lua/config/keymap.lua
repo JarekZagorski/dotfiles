@@ -12,9 +12,9 @@ vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank line to clipboard' })
 
 ---@param opts vim.diagnostic.JumpOpts
 local function diagnostic_jump(opts)
-    return function()
-        vim.diagnostic.jump(opts)
-    end
+  return function()
+    vim.diagnostic.jump(opts)
+  end
 end
 
 -- lsp keymaps
@@ -33,16 +33,15 @@ vim.keymap.set('n', '[d', diagnostic_jump { count = -1, float = true }, { desc =
 vim.keymap.set('n', ']d', diagnostic_jump { count = 1, float = true }, { desc = 'Next diagnostics' })
 
 -- harpoon
-local harpoon = require'harpoon'
+local harpoon = require 'harpoon'
 
 -- required
 harpoon:setup()
 
-vim.keymap.set('n', '<leader>a', function () harpoon:list():add() end)
-vim.keymap.set('n', '<C-e>', function () harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set('n', '<leader>a', function() harpoon:list():add() end)
+vim.keymap.set('n', '<C-e>', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
-vim.keymap.set('n', '<C-h>', function () harpoon:list():select(1) end)
-vim.keymap.set('n', '<C-j>', function () harpoon:list():select(2) end)
-vim.keymap.set('n', '<C-k>', function () harpoon:list():select(3) end)
-vim.keymap.set('n', '<C-l>', function () harpoon:list():select(4) end)
-
+vim.keymap.set('n', '<C-h>', function() harpoon:list():select(1) end)
+vim.keymap.set('n', '<C-j>', function() harpoon:list():select(2) end)
+vim.keymap.set('n', '<C-k>', function() harpoon:list():select(3) end)
+vim.keymap.set('n', '<C-l>', function() harpoon:list():select(4) end)

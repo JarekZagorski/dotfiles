@@ -23,4 +23,4 @@ vim.opt.signcolumn = 'yes:1'
 vim.opt.updatetime = 1000
 
 -- some better stuff for default completion window
-vim.cmd[[set completeopt+=menuone,noselect,popup]]
+vim.cmd [[set completeopt+=menuone,noselect,popup]]
