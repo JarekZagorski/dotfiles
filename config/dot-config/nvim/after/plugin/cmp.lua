@@ -1,25 +1,15 @@
--- Plug 'neovim/nvim-lspconfig'
--- Plug 'hrsh7th/cmp-nvim-lsp'
--- Plug 'hrsh7th/cmp-buffer'
--- Plug 'hrsh7th/cmp-path'
--- Plug 'hrsh7th/cmp-cmdline'
--- Plug 'hrsh7th/nvim-cmp'
-
--- Set up nvim-cmp.
 local cmp = require 'cmp'
 
 local completion_mapping = {
   ['<CR>'] = cmp.mapping(function(fallback)
     if cmp.visible() then
-      cmp.confirm({
-        select = true,
-      })
+      cmp.confirm { select = true }
     else
       fallback()
     end
   end),
 
-  ["<Tab>"] = cmp.mapping(function(fallback)
+  ['<Tab>'] = cmp.mapping(function(fallback)
     if cmp.visible() then
       cmp.select_next_item()
     elseif vim.snippet.active({ direction = 1 }) then
@@ -27,9 +17,9 @@ local completion_mapping = {
     else
       fallback()
     end
-  end, { "i", "s" }),
+  end, { 'i', 's' }),
 
-  ["<S-Tab>"] = cmp.mapping(function(fallback)
+  ['<S-Tab>'] = cmp.mapping(function(fallback)
     if cmp.visible() then
       cmp.select_prev_item()
     elseif vim.snippet.active({ direction = -1 }) then
@@ -37,7 +27,7 @@ local completion_mapping = {
     else
       fallback()
     end
-  end, { "i", "s" }),
+  end, { 'i', 's' }),
   -- ... Your other mappings ...
   ['<C-b>'] = cmp.mapping.scroll_docs(-4),
   ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -49,7 +39,7 @@ cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      vim.snippet.expand(args.body)       -- For native neovim snippets (Neovim v0.10+)
+      vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
     end,
   },
   window = {
@@ -64,7 +54,6 @@ cmp.setup({
   ),
   -- preselect = 'None',
 })
-
 
 -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
 -- Set configuration for specific filetype.
