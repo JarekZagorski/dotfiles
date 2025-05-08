@@ -1,9 +1,14 @@
 local cmp = require 'cmp'
+local luasnip = require 'luasnip'
 
 local completion_mapping = {
   ['<CR>'] = cmp.mapping(function(fallback)
     if cmp.visible() then
-      cmp.confirm { select = true }
+      if luasnip.expandable() then
+        luasnip.expand {}
+      else
+        cmp.confirm { select = true }
+      end
     else
       fallback()
     end
@@ -12,8 +17,8 @@ local completion_mapping = {
   ['<Tab>'] = cmp.mapping(function(fallback)
     if cmp.visible() then
       cmp.select_next_item()
-    elseif vim.snippet.active({ direction = 1 }) then
-      vim.snippet.jump(1)
+    elseif luasnip.locally_jumpable(1) then
+      luasnip.jump(1)
     else
       fallback()
     end
@@ -22,8 +27,8 @@ local completion_mapping = {
   ['<S-Tab>'] = cmp.mapping(function(fallback)
     if cmp.visible() then
       cmp.select_prev_item()
-    elseif vim.snippet.active({ direction = -1 }) then
-      vim.snippet.jump(-1)
+    elseif luasnip.locally_jumpable(-1) then
+      luasnip.jump(-1)
     else
       fallback()
     end
@@ -48,10 +53,11 @@ cmp.setup({
   },
   -- mapping = cmp.mapping.preset.insert({ -- if defaults are indeed wanted
   mapping = completion_mapping,
-  sources = cmp.config.sources(
-    { { name = 'nvim_lsp' } },
-    { { name = 'buffer' } }
-  ),
+  sources = cmp.config.sources {
+    { name = 'nvim_lsp' },
+    { name = 'buffer' },
+    { name = 'luasnip' },
+  },
   -- preselect = 'None',
 })
 
