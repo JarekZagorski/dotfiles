@@ -27,6 +27,7 @@ local ms = ls.multi_snippet
 local k = require("luasnip.nodes.key_indexer").new_key
 
 return {
-  s("trig", t("loaded!!")),
-  s("today", p(os.date, "%Y.%m.%d"))
+  -- s("trig", t("loaded!!")),
+  s("stoday", p(os.date, "%Y.%m.%d"))
 }
+

@@ -42,9 +42,9 @@ local completion_mapping = {
 
 cmp.setup({
   snippet = {
-    -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+      -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+      luasnip.lsp_expand(args.body)
     end,
   },
   window = {
@@ -55,8 +55,8 @@ cmp.setup({
   mapping = completion_mapping,
   sources = cmp.config.sources {
     { name = 'nvim_lsp' },
-    { name = 'buffer' },
     { name = 'luasnip' },
+    { name = 'buffer' },
   },
   -- preselect = 'None',
 })

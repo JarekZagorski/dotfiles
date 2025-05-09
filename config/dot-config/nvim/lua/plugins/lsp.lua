@@ -4,7 +4,14 @@ return {
     dependencies = { 'hrsh7th/cmp-nvim-lsp' },
   },
   { "williamboman/mason.nvim" },
-  { 'hrsh7th/nvim-cmp' },
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies =
+    {
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-nvim-lsp',
+    }
+  },
   {
     "L3MON4D3/LuaSnip",
     -- follow latest release.

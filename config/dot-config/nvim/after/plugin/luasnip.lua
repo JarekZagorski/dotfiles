@@ -1,7 +1,6 @@
 local luasnip = require 'luasnip'
-luasnip.setup {
+luasnip.setup {}
 
-}
-require("luasnip.loaders.from_lua").load {
-  paths = { "snippets" },
+require('luasnip.loaders.from_lua').load {
+  paths = { vim.fn.stdpath'config' .. '/snippets' },
 }
