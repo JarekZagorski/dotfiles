@@ -58,14 +58,10 @@
                 (alpha-background . c-opacity)       ;; set window opacity
                 (fullscreen . maximized)      ;; maximize frame on start
         ))
-
-        ;; set window opacity
         (set-frame-parameter nil 'alpha-background c-opacity)
+        (set-frame-parameter nil 'undecorated 't)
+        (set-frame-parameter nil 'fullscreen 'maximized)
 )
-
-(load! "themes/tokyo-theme.el")
-
-;; (load-theme tokyo)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
