@@ -50,11 +50,22 @@
 ;; disable current line highlight
 (setq global-hl-line-modes nil)
 
-;; disables decorations on emacs frames
-(setq default-frame-alist '(
-                            (undecorated . t)  ;; disable window decorations
-                            (vertical-scroll-bars . nil)  ;; disable scroll bars
-))
+(let ((c-opacity 85))
+        ;; disables decorations on emacs frames
+        (setq default-frame-alist '(
+                (undecorated . t)             ;; disable window decorations
+                (vertical-scroll-bars . nil)  ;; disable scroll bars
+                (alpha-background . c-opacity)       ;; set window opacity
+                (fullscreen . maximized)      ;; maximize frame on start
+        ))
+
+        ;; set window opacity
+        (set-frame-parameter nil 'alpha-background c-opacity)
+)
+
+(load! "themes/tokyo-theme.el")
+
+;; (load-theme tokyo)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -87,7 +98,3 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
-
-;; set window opacity
-(set-frame-parameter nil 'alpha-background 85)
-(add-to-list 'default-frame-alist '(alpha-background . 85))
