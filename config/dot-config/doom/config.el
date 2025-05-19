@@ -50,18 +50,18 @@
 ;; disable current line highlight
 (setq global-hl-line-modes nil)
 
-(let ((c-opacity 85))
-        ;; disables decorations on emacs frames
-        (setq default-frame-alist '(
-                (undecorated . t)             ;; disable window decorations
-                (vertical-scroll-bars . nil)  ;; disable scroll bars
-                (alpha-background . c-opacity)       ;; set window opacity
-                (fullscreen . maximized)      ;; maximize frame on start
-        ))
-        (set-frame-parameter nil 'alpha-background c-opacity)
-        (set-frame-parameter nil 'undecorated 't)
-        (set-frame-parameter nil 'fullscreen 'maximized)
-)
+(add-to-list 'default-frame-alist '(alpha-background . 85))
+(add-to-list 'default-frame-alist '(undecorated . t))
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; set window opacity
+(set-frame-parameter nil 'alpha-background 85)
+(set-frame-parameter nil 'undecorated t)
+
+;; TODO: add treesitter data
+
+(setq scroll-margin 12)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
