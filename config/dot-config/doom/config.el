@@ -61,7 +61,11 @@
 
 ;; TODO: add treesitter data
 
-(setq scroll-margin 12)
+;; (setq scroll-margin 12)
+
+;; set correct shells to use for emacs
+(setq shell-file-name (executable-find "bash"))  ;; because of internal emacs usage
+(setq-default vterm-shell (getenv "SHELL"))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
