@@ -33,7 +33,8 @@ local wallpapers = {
     Unix = {
         Dark = {
             image = "/home/jakub/dotfiles/wallpapers/tokyo-night/tokyo-night33.png",
-            overlay = "rgba(26, 27, 38, 0.9)"
+            overlay = "rgba(28, 23, 34, 0.68)"
+            -- overlay = "rgba(24, 24, 35, 0.85)"
         },
         Light = {
             image = "/home/jakub/dotfiles/wallpapers/rur2ErE.jpeg",
