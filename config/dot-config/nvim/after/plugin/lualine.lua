@@ -5,6 +5,10 @@ local macro_section = {
   cond = function() return vim.fn.reg_recording() ~= '' end,
 }
 
+local function time()
+  return os.date(" %H:%M ")
+end
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
@@ -29,9 +33,9 @@ require('lualine').setup {
     lualine_a = { 'mode', macro_section },
     lualine_b = { 'branch', 'diff', 'diagnostics' },
     lualine_c = { 'filename' },
-    lualine_x = { 'encoding', 'fileformat', 'filetype' },
-    lualine_y = { 'progress' },
-    lualine_z = { 'location' }
+    lualine_x = { 'encoding', 'filetype' },
+    lualine_y = { 'progress', 'location'  },
+    lualine_z = { time }
   },
   inactive_sections = {
     lualine_a = {},
@@ -44,5 +48,5 @@ require('lualine').setup {
   tabline = {},
   winbar = {},
   inactive_winbar = {},
-  extensions = {}
+  extensions = {},
 }
