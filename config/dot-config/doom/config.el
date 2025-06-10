@@ -3,6 +3,16 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
+;; Performance Hacks
+;; Emacs is an Elisp interpreter, and when running programs or packages,
+;; it can occasionally experience pauses due to garbage collection.
+;; By increasing the garbage collection threshold, we reduce these pauses
+;; during heavy operations, leading to smoother performance.
+(setq gc-cons-threshold #x40000000)
+
+;; Set the maximum output size for reading process output, allowing for larger data transfers.
+(setq read-process-output-max (* 1024 1024 4))
+
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
@@ -28,6 +38,7 @@
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
+
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme'ror manually load a theme with the
