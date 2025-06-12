@@ -89,6 +89,12 @@
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 ;; (setq scroll-margin 12)
 
+;; add column at some mark in prog-mode
+(setopt display-fill-column-indicator-column 80)
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+(add-hook 'csharp-mode-hook
+          (lambda ()
+            (setq-local display-fill-column-indicator-column 120)))
 ;; set correct shells to use for emacs
 (setq shell-file-name (executable-find "bash"))  ;; because of internal emacs usage
 (setq-default vterm-shell (getenv "SHELL"))

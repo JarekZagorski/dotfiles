@@ -10,6 +10,7 @@
      "2865a6070f7e8b4b47b598fe15c7ec5b0e87f4378c9323d35f9f34ef354560ba"
      "3769087436ae8a86e8a69928925a24ed038670a5473a75349a8fec76472745cd"
      "4594d6b9753691142f02e67b8eb0fda7d12f6cc9f1299a49b819312d6addad1d" default))
+ '(package-selected-packages '(templ-ts-mode))
  '(safe-local-variable-values '((eval when (fboundp 'rainbow-mode) (rainbow-mode 1)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
