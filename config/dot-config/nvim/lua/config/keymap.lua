@@ -11,7 +11,9 @@ local telescope = require('telescope.builtin')
 --vim.keymap.set('n', '<C-p>', telescope.git_files, {})
 
 -- Git
-vim.keymap.set('n', '<leader>gg', vim.cmd.Git, { desc = 'Git Fugitive: git status' })
+local telescope_extensions = require 'config.telescope_extensions'
+vim.keymap.set('n', '<leader>gg', vim.cmd.Git, { desc = 'Git status' })
+vim.keymap.set('n', '<leader>gf', telescope_extensions.fixup_picker, { desc = 'Git fixup' })
 
 -- <leader> segment
 vim.keymap.set('n', '<leader>ff', telescope.find_files, { desc = 'Find File' })
