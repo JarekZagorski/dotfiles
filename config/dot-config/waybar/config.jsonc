@@ -1,0 +1,113 @@
+{
+    "position": "top", 
+    "height": 20,
+    "reload_style_on_change": true,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": [
+        "network", 
+        "pulseaudio",
+        "backlight",
+        "custom/theme-switch",
+        "battery",
+        // "custom/date",
+        // "clock",
+        // "temperature",
+        // "disk",
+        // "memory",
+        // "cpu",
+        "tray",
+    ],
+
+    // Modules configuration
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{icon}",
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": [],
+            "10": [],
+        },
+        "format-icons": {
+            "1": "dev",
+            "2": "www",
+            "3": "dev2",
+            "4": "doc",
+            "5": "sys",
+            "6": "chat",
+            "7": "mus",
+            "8": "vid",
+            "9": "gfx",
+            "10": "msc"
+        }
+    },
+
+    "custom/theme-switch": {
+        "exec": "$XDG_CONFIG_HOME/waybar/scripts/theme_switcher.sh",
+    },
+    // "custom/date": {
+    //     "format": "󰸗 {}",
+    //     "interval": 3600,
+    //     "exec": "/home/loki/bin/waybar-date.sh"
+    // },
+    // "custom/power": {
+    //     "format": "󰐥",
+    //     "on-click": "/home/loki/bin/waybar-power.sh"
+    // },
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{percent}% {icon}",
+        "format-icons": ["󰃜", "󰃛", "󰃚"]
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15,
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰂄 {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-full": "󱈑 {capacity}%",
+        "format-icons": ["󱊡", "󱊢", "󱊣"]
+    },
+    "network": {
+        "format-wifi": "{icon}  {essid}",
+        "format-ethernet": "󰈁  {ipaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "󰤮 Disconnected",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+    },
+    "pulseaudio": {
+        "format": "{icon}   {volume}%",
+        "format-muted": "󰖁 ",
+        "format-bluetooth": "ᛒ {volume}%",
+        "format-bluetooth-muted": "ᛒ 󰖁 ",
+        "format-icons": {
+            "headphone": "",
+            "bluetooth": "ᛒ",
+            "phone": "",
+            "portable": "",
+            "default": ["","","", "", ""]
+        },
+    },
+    "tray": {
+        "icon-size": 13,
+        "spacing": 5,
+    }, 
+}

@@ -1,0 +1,140 @@
+@define-color bg		#1a1b26;
+@define-color bg_dark		#16161e;
+@define-color bg_dark1		#0C0E14;
+@define-color bg_highlight	#292e42;
+@define-color blue		#7aa2f7;
+@define-color blue0		#3d59a1;
+@define-color blue1		#2ac3de;
+@define-color blue2		#0db9d7;
+@define-color blue5		#89ddff;
+@define-color blue6		#b4f9f8;
+@define-color blue7		#394b70;
+@define-color comment		#565f89;
+@define-color cyan		#7dcfff;
+@define-color dark3		#545c7e;
+@define-color dark5		#737aa2;
+@define-color fg		#c0caf5;
+@define-color fg_dark		#a9b1d6;
+@define-color fg_gutter		#3b4261;
+@define-color green		#9ece6a;
+@define-color green1		#73daca;
+@define-color green2		#41a6b5;
+@define-color magenta		#bb9af7;
+@define-color magenta2		#ff007c;
+@define-color orange		#ff9e64;
+@define-color purple		#9d7cd8;
+@define-color red		#f7768e;
+@define-color red1		#db4b4b;
+@define-color teal		#1abc9c;
+@define-color terminal_black	#414868;
+@define-color yellow		#e0af68;
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: Fira Code Mono;
+  font-weight: 600;
+  font-size: 15px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: white;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    border: 3px solid transparent;
+    background-color: @bg;
+    border-radius: 10px;
+}
+
+#tooltip {
+    /* background: rgba(@bg, 0.5); */
+    border-radius: 3px;
+}
+
+#workspaces {
+  /* margin: 5px; */
+  margin-left: 5px;
+  /* border-radius: 5px; */
+
+    /* background: @yellow; */
+}
+#workspaces button {
+  /* padding: 2px 8px; */
+  color: #fff;
+}
+
+#workspaces button.focused {
+  color: #24283b;
+  background-color: #7aa2f7;
+  border-radius: 5px;
+}
+
+#workspaces button:hover {
+  background-color: #7dcfff;
+  color: #24283b;
+  border-radius: 5px;
+}
+
+#clock,
+#battery,
+#pulseaudio,
+#network {
+  padding: 0px 10px;
+  /* margin: 5px 0px; */
+}
+
+#backlight {
+    padding-right: 5px;
+    color: @yellow;
+    /* border: 5px solid red; */
+    margin-right: 4px;
+}
+
+#clock {
+  color: @magenta;
+  /* border-radius: 0px 5px 5px 0px; */
+  /* margin-right: 6px; */
+}
+
+#network {
+    color: @cyan;
+}
+
+#battery {
+  color: @green;
+}
+
+#battery.charging {
+  background-color: @teal;
+  color: @bg;
+  border-radius: 5px 5px 5px 5px;
+}
+
+#battery.warning:not(.charging) {
+  background-color: @red1;
+  color: @bg;
+  border-radius: 5px 5px 5px 5px;
+}
+
+#pulseaudio {
+  color: @orange;
+}
+
+#tray {
+  background-color: #455085;
+  margin: 5px;
+  margin-left: 0px;
+  margin-right: 6px;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+#tray > * {
+  padding: 0 2px;
+  margin: 0 2px;
+}
