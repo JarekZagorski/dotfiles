@@ -1,0 +1,1 @@
+/home/jakub/programs/exercism/shell/exercism.fish
