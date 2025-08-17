@@ -20,6 +20,7 @@ local enabled_servers = {
   'cssls',
   'nushell',
   'ocamllsp',
+  'ts_ls',
 }
 
 -- provide each server with some default config, else it fails
