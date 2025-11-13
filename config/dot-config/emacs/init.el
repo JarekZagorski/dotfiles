@@ -1,27 +1,71 @@
 ;; Do not show startup message
 (setq inhibit-startup-message t)
 
-;; disable unnecessary menu bars
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(blink-cursor-mode -1)
-
 ;; add line numbers
 (global-display-line-numbers-mode 1)
 
 ;; improve emacs' easy customization
 (setq custom-file "~/.config/emacs/custom.el")
 (load custom-file)
+;; (setq scroll-margin 12)
 
-;; theme
-(load-theme 'deeper-blue t)
+;; =========================
+;; ====== TREE SITTER ======
+;; =========================
 
-;; add some useful minor modes
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (cmake "https://github.com/uyha/tree-sitter-cmake")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+        (go "https://github.com/tree-sitter/tree-sitter-go" "v0.25.0")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (make "https://github.com/alemuller/tree-sitter-make")
+        (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (toml "https://github.com/tree-sitter/tree-sitter-toml")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+;; =========================
+;; ========= MODES =========
+;; =========================
+
 (recentf-mode 1)
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers 1)
 (which-key-mode 1)
+;; disable unnecessary menu bars
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(blink-cursor-mode -1)
+
+;; =========================
+;; ========= LOOKS =========
+;; =========================
+
+(add-to-list 'default-frame-alist '(alpha-background . 85))
+(add-to-list 'default-frame-alist '(undecorated . t))
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;; set window opacity
+(set-frame-parameter nil 'alpha-background 85)
+(set-frame-parameter nil 'undecorated t)
+
+;; theme
+(load-theme 'deeper-blue t)
+
+;; font
+(set-frame-font "Fira Code 12" nil t)
+
+;; =========================
+;; ==== CUSTOM PACKAGES ====
+;; =========================
 
 ;; Set up package.el to work with MELPA
 (require 'package)
