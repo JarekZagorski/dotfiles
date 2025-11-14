@@ -1,3 +1,18 @@
+;; =========================
+;; ====== Performance ======
+;; =========================
+(setq gc-cons-threshold (* 50 1000 1000))
+
+;; info on startup time
+(defun cst/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+	   (format "%.2f seconds"
+		   (float-time
+		    (time-subtract after-init-time before-init-time)))
+	   gcs-done))
+
+(add-hook 'emacs-startup-hook #'cst/display-startup-time)
+
 ;; Do not show startup message
 (setq inhibit-startup-message t)
 
@@ -10,6 +25,7 @@
 ;; (setq scroll-margin 12)
 
 ;; =========================
+
 ;; ====== TREE SITTER ======
 ;; =========================
 
@@ -38,11 +54,13 @@
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers 1)
 (which-key-mode 1)
+(column-number-mode 1) ;; for static size number column
 ;; disable unnecessary menu bars
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
+(set-fringe-mode 10)
 
 ;; =========================
 ;; ========= LOOKS =========
@@ -70,10 +88,23 @@
 ;; Set up package.el to work with MELPA
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+(setq use-package-always-ensure t)
 ;; is for refreshing packages
 ;; (package-refresh-contents) 
+
+;; looks
+
+(use-package nerd-icons
+  :ensure t
+  :custom
+  ;; The Nerd Font you want to use in GUI
+  ;; "Symbols Nerd Font Mono" is the default and is recommended
+  ;; but you can use any other Nerd Font if you want
+  (nerd-icons-font-family "Fira Code"))
 
 ;; Download and Enable Evil
 (use-package evil
@@ -101,3 +132,26 @@
   :ensure t
   :config
   (evil-collection-init))
+
+;; =========================
+;; ========== LSP ==========
+;; =========================
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  ; :hook
+  ; (go-mode . lsp)
+  ; (zig-mode . lsp)
+  :config
+  (lsp-enable-which-key-integration t))
+
+;; =========================
+;; ======= PROG MODE =======
+;; =========================
+
+;; programming modes
+(use-package zig-mode
+  :mode "\\.\\(zig\\|zon\\)\\'" 
+  :hook (zig-mode . lsp-deferred))
