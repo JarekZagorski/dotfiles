@@ -16,9 +16,6 @@
 ;; Do not show startup message
 (setq inhibit-startup-message t)
 
-;; add line numbers
-(global-display-line-numbers-mode 1)
-
 ;; improve emacs' easy customization
 (setq custom-file "~/.config/emacs/custom.el")
 (load custom-file)
@@ -61,6 +58,8 @@
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
 (set-fringe-mode 10)
+;; add line numbers
+(global-display-line-numbers-mode 1)
 
 ;; =========================
 ;; ========= LOOKS =========
