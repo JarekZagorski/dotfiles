@@ -150,7 +150,18 @@
 ;; ======= PROG MODE =======
 ;; =========================
 
-;; programming modes
 (use-package zig-mode
   :mode "\\.\\(zig\\|zon\\)\\'" 
   :hook (zig-mode . lsp-deferred))
+
+(use-package go-ts-mode
+  :mode "\\.go\\'"
+  :hook (go-ts-mode . lsp-deferred)
+  :init
+  ;; because cannot put in :mode block
+  (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
+  :config
+  (setq go-ts-mode-indent-offset 4)
+  (setq tab-width 4)
+  )
+  
