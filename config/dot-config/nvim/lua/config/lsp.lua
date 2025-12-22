@@ -20,7 +20,10 @@ local enabled_servers = {
   'cssls',
   'nushell',
   'ocamllsp',
+  'csharp_ls',
   'ts_ls',
+  'fsautocomplete',
+  'pyright',
 }
 
 -- provide each server with some default config, else it fails
