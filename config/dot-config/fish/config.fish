@@ -20,6 +20,8 @@ end
 
 set DOTNET_CLI_TELEMETRY_OPTOUT 'true'
 
+complete -f -c dotnet -a "(dotnet complete (commandline -cp))"
+
 # source "$HOME/.cargo/env.fish"  # For fish
 
 # BEGIN opam configuration

@@ -162,6 +162,4 @@
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
   :config
   (setq go-ts-mode-indent-offset 4)
-  (setq tab-width 4)
-  )
-  
+  (setq tab-width 4))
