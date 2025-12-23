@@ -3,6 +3,8 @@ require 'nvim-treesitter.configs'.setup {
   ensure_installed = {
     "comment",
     "lua",
+    "norg",
+    "norg_meta",
   },
 
   auto_install = true,
