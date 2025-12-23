@@ -1,7 +1,7 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.8',     -- may remove this
+    tag = '0.1.8', -- may remove this
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
   {
@@ -13,7 +13,7 @@ return {
   },
   {
     'folke/lazydev.nvim',
-    ft = 'lua',     -- only load on lua files
+    ft = 'lua', -- only load on lua files
     opts = {
       library = {
         -- See the configuration section for more details
