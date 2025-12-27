@@ -80,6 +80,9 @@
 ;; font
 (set-frame-font "Fira Code 12" nil t)
 
+;; fringes (aka those annoying borders on frame sides)
+;; (set-fringe-mode 0)
+
 ;; =========================
 ;; ==== CUSTOM PACKAGES ====
 ;; =========================
@@ -124,7 +127,7 @@
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal)
-  (setq evil-undo-system 'undo-redo))
+  (evil-set-undo-system 'undo-redo))
 
 (use-package evil-collection
   :after evil
