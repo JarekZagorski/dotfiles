@@ -59,6 +59,7 @@
 (setq global-auto-revert-non-file-buffers 1)
 (which-key-mode 1)
 (column-number-mode 1) ;; for static size number column
+(setopt display-line-numbers-width 3) 
 ;; disable unnecessary menu bars
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -77,6 +78,8 @@
 (add-to-list 'default-frame-alist '(undecorated . t))
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; font
+(add-to-list 'default-frame-alist '(font . "Fira Code 12" ))
 
 ;; set window opacity
 (set-frame-parameter nil 'alpha-background 85)
@@ -84,12 +87,6 @@
 
 ;; theme
 ; (load-theme 'deeper-blue t)
-
-;; font
-(set-frame-font "Fira Code 12" nil t)
-
-;; fringes (aka those annoying borders on frame sides)
-;; (set-fringe-mode 0)
 
 ;; add themes subdirectory to known themes path
 (add-to-list 'load-path (cst/locate-file "themes"))
