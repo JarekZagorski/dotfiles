@@ -1,4 +1,12 @@
 ;; =========================
+;; ======= Utilities =======
+;; =========================
+
+(defun cst/locate-file (filename)
+  "Combines emacs runtime path with provided filename"
+  (concat user-emacs-directory filename))
+
+;; =========================
 ;; ====== Performance ======
 ;; =========================
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -17,12 +25,11 @@
 (setq inhibit-startup-message t)
 
 ;; improve emacs' easy customization
-(setq custom-file "~/.config/emacs/custom.el")
+(setq custom-file (cst/locate-file "custom.el"))
 (load custom-file)
 ;; (setq scroll-margin 12)
 
 ;; =========================
-
 ;; ====== TREE SITTER ======
 ;; =========================
 
@@ -60,6 +67,7 @@
 (set-fringe-mode 10)
 ;; add line numbers
 (global-display-line-numbers-mode 1)
+(pixel-scroll-precision-mode 1)
 
 ;; =========================
 ;; ========= LOOKS =========
@@ -84,11 +92,8 @@
 ;; (set-fringe-mode 0)
 
 ;; add themes subdirectory to known themes path
-(add-to-list 'load-path
-	     (expand-file-name (locate-user-emacs-file "themes")))
-
-(add-to-list 'custom-theme-load-path
-	     (expand-file-name (locate-user-emacs-file "themes")))
+(add-to-list 'load-path (cst/locate-file "themes"))
+(add-to-list 'custom-theme-load-path (cst/locate-file "themes"))
 
 (load-theme 'zenburn t)
 
