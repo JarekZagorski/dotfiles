@@ -75,13 +75,22 @@
 (set-frame-parameter nil 'undecorated t)
 
 ;; theme
-(load-theme 'deeper-blue t)
+; (load-theme 'deeper-blue t)
 
 ;; font
 (set-frame-font "Fira Code 12" nil t)
 
 ;; fringes (aka those annoying borders on frame sides)
 ;; (set-fringe-mode 0)
+
+;; add themes subdirectory to known themes path
+(add-to-list 'load-path
+	     (expand-file-name (locate-user-emacs-file "themes")))
+
+(add-to-list 'custom-theme-load-path
+	     (expand-file-name (locate-user-emacs-file "themes")))
+
+(load-theme 'zenburn t)
 
 ;; =========================
 ;; ==== CUSTOM PACKAGES ====
@@ -96,7 +105,7 @@
   (package-refresh-contents))
 (setq use-package-always-ensure t)
 ;; is for refreshing packages
-;; (package-refresh-contents) 
+;; (package-refresh-contents)
 
 ;; looks
 
@@ -154,7 +163,7 @@
 ;; =========================
 
 (use-package zig-mode
-  :mode "\\.\\(zig\\|zon\\)\\'" 
+  :mode "\\.\\(zig\\|zon\\)\\'"
   :hook (zig-mode . lsp-deferred))
 
 (use-package go-ts-mode
