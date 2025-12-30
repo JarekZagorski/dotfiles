@@ -48,7 +48,8 @@
         (toml "https://github.com/tree-sitter/tree-sitter-toml")
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-        (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+        (gitcommit "https://github.com/gbprod/tree-sitter-gitcommit")))
 
 ;; =========================
 ;; ========= MODES =========
@@ -93,6 +94,20 @@
 (add-to-list 'custom-theme-load-path (cst/locate-file "themes"))
 
 (load-theme 'zenburn t)
+
+;; =========================
+;; ======== OPTIONS ========
+;; =========================
+
+;; make tabs preferred size of 4 spaces
+(setq-default tab-width 4)
+
+;; some fixes for indentation
+; (setq-default indent-tabs-mode nil)
+
+;; marks tab as just inserting tab
+;; for native emacs', set to 'indent-relative
+(setq indent-line-function 'insert-tab)
 
 ;; =========================
 ;; ==== CUSTOM PACKAGES ====
@@ -161,6 +176,15 @@
   (lsp-enable-which-key-integration t))
 
 ;; =========================
+;; ========== GIT ==========
+;; =========================
+
+(use-package git-modes)
+
+(use-package git-commit-ts-mode
+  :mode "\\COMMIT_EDITMSG\\'")
+
+;; =========================
 ;; ======= PROG MODE =======
 ;; =========================
 
@@ -175,5 +199,4 @@
   ;; because cannot put in :mode block
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
   :config
-  (setq go-ts-mode-indent-offset 4)
-  (setq tab-width 4))
+  (setq go-ts-mode-indent-offset 4))
