@@ -1,9 +1,11 @@
+;;; init.el --- custom config  -*- lexical-binding: t; -*-
+
 ;; =========================
 ;; ======= Utilities =======
 ;; =========================
 
 (defun cst/locate-file (filename)
-  "Combines emacs runtime path with provided filename"
+  "Combines Emacs runtime path with provided FILENAME."
   (concat user-emacs-directory filename))
 
 ;; =========================
@@ -13,6 +15,7 @@
 
 ;; info on startup time
 (defun cst/display-startup-time ()
+  "Displays startup time message."
   (message "Emacs loaded in %s with %d garbage collections."
 	   (format "%.2f seconds"
 		   (float-time
@@ -200,3 +203,5 @@
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
   :config
   (setq go-ts-mode-indent-offset 4))
+
+;;; init.el ends here
