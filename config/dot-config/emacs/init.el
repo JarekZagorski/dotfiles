@@ -63,7 +63,7 @@
 (setq global-auto-revert-non-file-buffers 1)
 (which-key-mode 1)
 (column-number-mode 1) ;; for static size number column
-(setopt display-line-numbers-width 3) 
+(setopt display-line-numbers-width 3)
 ;; disable unnecessary menu bars
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -97,6 +97,10 @@
 (add-to-list 'custom-theme-load-path (cst/locate-file "themes"))
 
 (load-theme 'zenburn t)
+
+;; add plugins subdirectory
+(add-to-list 'load-path
+	     (expand-file-name (locate-user-emacs-file "plugins")))
 
 ;; =========================
 ;; ======== OPTIONS ========
@@ -144,7 +148,9 @@
   (setq evil-want-integration t
 	evil-want-keybinding nil
 	evil-want-C-u-scroll t
-	evil-want-C-i-jump t)
+	evil-want-C-i-jump t
+	;; disables copying to clipboard when using motions
+	select-enable-clipboard nil)
   :config
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
@@ -163,6 +169,8 @@
   :ensure t
   :config
   (evil-collection-init))
+
+(use-package flycheck)
 
 ;; =========================
 ;; ========== LSP ==========
