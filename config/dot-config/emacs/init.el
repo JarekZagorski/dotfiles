@@ -194,9 +194,7 @@
 (use-package lsp-ui
   :config
   (lsp-ui-doc-enable t)
-  ; (setq lsp-ui-doc-position )
-  (define-key evil-normal-state-map (kbd "K") 'lsp-ui-doc-glance)
-  )
+  (define-key evil-normal-state-map (kbd "K") 'lsp-ui-doc-glance))
 
 
 ;; =========================

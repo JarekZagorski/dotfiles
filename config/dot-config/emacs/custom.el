@@ -13,10 +13,9 @@
  '(lsp-ui-doc-show-with-cursor nil)
  '(lsp-ui-doc-show-with-mouse nil)
  '(package-selected-packages
-   '(catppuccin-theme company corfu evil-collection flycheck
-					  git-commit-ts-mode git-modes lsp-mode lsp-ui
-					  marginalia nerd-icons orderless stimmung-themes
-					  vertico zig-mode)))
+   '(catppuccin-theme corfu evil-collection flycheck git-commit-ts-mode
+					  git-modes lsp-mode lsp-ui marginalia nerd-icons
+					  orderless stimmung-themes vertico zig-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
