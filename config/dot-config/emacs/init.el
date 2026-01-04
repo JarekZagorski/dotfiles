@@ -95,12 +95,14 @@
 ;; add themes subdirectory to known themes path
 (add-to-list 'load-path (cst/locate-file "themes"))
 (add-to-list 'custom-theme-load-path (cst/locate-file "themes"))
-
-(load-theme 'zenburn t)
-
 ;; add plugins subdirectory
-(add-to-list 'load-path
-	     (expand-file-name (locate-user-emacs-file "plugins")))
+(add-to-list 'load-path (cst/locate-file "plugins"))
+
+(use-package catppuccin-theme
+  :config
+  (setq catppuccin-flavor 'mocha))
+
+(load-theme 'catppuccin t)
 
 ;; =========================
 ;; ======== OPTIONS ========
@@ -184,7 +186,9 @@
   ; (go-mode . lsp)
   ; (zig-mode . lsp)
   :config
-  (lsp-enable-which-key-integration t))
+  (lsp-enable-which-key-integration t)
+  (lsp-headerline-breadcrumb-mode nil)  ;; disable breadcrumbs
+  )
 
 ;; =========================
 ;; ========== GIT ==========
