@@ -182,6 +182,7 @@
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-eldoc-enable-hover t)
   ; :hook
   ; (go-mode . lsp)
   ; (zig-mode . lsp)
@@ -189,6 +190,14 @@
   (lsp-enable-which-key-integration t)
   (lsp-headerline-breadcrumb-mode nil)  ;; disable breadcrumbs
   )
+
+(use-package lsp-ui
+  :config
+  (lsp-ui-doc-enable t)
+  ; (setq lsp-ui-doc-position )
+  (define-key evil-normal-state-map (kbd "K") 'lsp-ui-doc-glance)
+  )
+
 
 ;; =========================
 ;; ========== GIT ==========
