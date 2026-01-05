@@ -7,3 +7,6 @@ truncate/
 .lsp-session-v1
 tree-sitter/
 transient/
+recentf.eld
+history
+.local/
