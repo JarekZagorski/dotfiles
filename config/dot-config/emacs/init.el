@@ -172,7 +172,10 @@
   :config
   (evil-collection-init))
 
-(use-package flycheck)
+(use-package flycheck
+  :config
+  (define-key evil-normal-state-map (kbd "]d") 'flycheck-next-error)
+  (define-key evil-normal-state-map (kbd "[d") 'flycheck-previous-error))
 
 ;; =========================
 ;; ========== LSP ==========
@@ -188,13 +191,20 @@
   ; (zig-mode . lsp)
   :config
   (lsp-enable-which-key-integration t)
-  (lsp-headerline-breadcrumb-mode nil)  ;; disable breadcrumbs
+  (lsp-headerline-breadcrumb-mode 0)  ;; disable breadcrumbs
+  (define-key evil-normal-state-map (kbd "K") 'lsp-ui-doc-glance)
+  (define-key evil-normal-state-map (kbd "gdd") 'lsp-find-definition)
+  (define-key evil-normal-state-map (kbd "gdt") 'lsp-find-type-definition)
+  (define-key evil-normal-state-map (kbd "gD") 'lsp-find-type-declaration)
+  (define-key evil-normal-state-map (kbd "gi") 'lsp-find-implementation)
+  (define-key evil-normal-state-map (kbd "gr") 'lsp-find-references)
+  (define-key evil-normal-state-map (kbd "gr") 'lsp-find-references)
   )
 
 (use-package lsp-ui
   :config
   (lsp-ui-doc-enable t)
-  (define-key evil-normal-state-map (kbd "K") 'lsp-ui-doc-glance))
+  )
 
 
 ;; =========================
