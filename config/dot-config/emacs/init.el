@@ -168,16 +168,20 @@
 	select-enable-clipboard nil)
   :config
   (evil-mode 1)
+
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal)
+  (evil-set-undo-system 'undo-redo)
+
+  (evil-set-leader 'normal (kbd "SPC"))
+
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
   ;; Use visual line motions even outside of visual-line-mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal)
-  (evil-set-undo-system 'undo-redo))
+  )
 
 (use-package evil-collection
   :after evil
@@ -187,8 +191,8 @@
 
 (use-package flycheck
   :config
-  (define-key evil-normal-state-map (kbd "]d") 'flycheck-next-error)
-  (define-key evil-normal-state-map (kbd "[d") 'flycheck-previous-error))
+  (evil-define-key 'normal 'flycheck-mode (kbd "]d") 'flycheck-next-error)
+  (evil-define-key 'normal 'flycheck-mode (kbd "[d") 'flycheck-previous-error))
 
 ;; =========================
 ;; ========== LSP ==========
@@ -196,29 +200,27 @@
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  (setq lsp-eldoc-enable-hover t)
-  ; :hook
-  ; (go-mode . lsp)
-  ; (zig-mode . lsp)
+  :hook ((go-ts-mode . lsp-deferred)
+		 (zig-mode . lsp-deferred))
+  :custom
+  (lsp-keymap-prefix "C-c l")
+  (lsp-eldoc-enable-hover t)
+  (lsp-headerline-breadcrumb-enable nil)
   :config
   (lsp-enable-which-key-integration t)
-  (lsp-headerline-breadcrumb-mode 0)  ;; disable breadcrumbs
-  (define-key evil-normal-state-map (kbd "K") 'lsp-ui-doc-glance)
-  (define-key evil-normal-state-map (kbd "gdd") 'lsp-find-definition)
-  (define-key evil-normal-state-map (kbd "gdt") 'lsp-find-type-definition)
-  (define-key evil-normal-state-map (kbd "gD") 'lsp-find-type-declaration)
-  (define-key evil-normal-state-map (kbd "gi") 'lsp-find-implementation)
-  (define-key evil-normal-state-map (kbd "gr") 'lsp-find-references)
-  (define-key evil-normal-state-map (kbd "gr") 'lsp-find-references)
-  )
+  (evil-define-key 'normal 'lsp-mode (kbd "K") 'lsp-ui-doc-glance)
+  (evil-define-key 'normal 'lsp-mode (kbd "gdd") 'lsp-find-definition)
+  (evil-define-key 'normal 'lsp-mode (kbd "gdt") 'lsp-find-type-definition)
+  (evil-define-key 'normal 'lsp-mode (kbd "gD") 'lsp-find-type-declaration)
+  (evil-define-key 'normal 'lsp-mode (kbd "gi") 'lsp-find-implementation)
+  (evil-define-key 'normal 'lsp-mode (kbd "gr") 'lsp-find-references)
+
+  ;; code actions
+  (evil-define-key 'normal 'lsp-mode (kbd "<leader>ca") 'lsp-execute-code-action))
 
 (use-package lsp-ui
   :config
-  (lsp-ui-doc-enable t)
-  )
-
+  (lsp-ui-doc-enable t))
 
 ;; =========================
 ;; ========== GIT ==========
@@ -316,12 +318,10 @@
 ;; =========================
 
 (use-package zig-mode
-  :mode "\\.\\(zig\\|zon\\)\\'"
-  :hook (zig-mode . lsp-deferred))
+  :mode "\\.\\(zig\\|zon\\)\\'")
 
 (use-package go-ts-mode
   :mode "\\.go\\'"
-  :hook (go-ts-mode . lsp-deferred)
   :init
   ;; because cannot put in :mode block
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
