@@ -99,12 +99,6 @@
 ;; add plugins subdirectory
 (add-to-list 'load-path (cst/locate-file "plugins"))
 
-(use-package catppuccin-theme
-  :config
-  (setq catppuccin-flavor 'mocha))
-
-(load-theme 'catppuccin t)
-
 ;; =========================
 ;; ======== OPTIONS ========
 ;; =========================
@@ -124,17 +118,31 @@
 ;; =========================
 
 ;; Set up package.el to work with MELPA
+
+;; Set up package and use-package
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+
+;; Bootstrap 'use-package'
+(eval-after-load 'gnutls
+  '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile
+  (require 'use-package))
+(require 'bind-key)
 (setq use-package-always-ensure t)
-;; is for refreshing packages
-;; (package-refresh-contents)
 
 ;; looks
+
+(use-package catppuccin-theme
+  :config
+  (setq catppuccin-flavor 'mocha))
+
+(load-theme 'catppuccin t)
 
 (use-package nerd-icons
   :ensure t
