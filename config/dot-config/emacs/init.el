@@ -362,4 +362,8 @@
   :config
   (setq go-ts-mode-indent-offset 4))
 
+(use-package lua-mode
+  :interpreter "lua"
+  :mode "\\.lua\\'")
+
 ;;; init.el ends here
