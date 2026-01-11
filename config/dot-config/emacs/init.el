@@ -325,8 +325,27 @@
 ;; ======= ORG MODE ========
 ;; =========================
 
+(use-package evil-org
+  :ensure t
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+;; define files
+(setopt org-default-notes-file "~/org/refile.org")
+(setopt org-hide-leading-stars nil)
+
 ;; add some keybinds
-(evil-define-key 'normal 'org-mode (kbd "<leader>oa") 'org-agenda)
+(evil-define-key 'normal 'global (kbd "<leader>oa") 'org-agenda)
+(evil-define-key 'normal 'global (kbd "<leader>oc") 'org-capture)
+
+(defun cst/org-mode ()
+  "Customize org mode."
+  (org-indent-mode))
+
+(add-hook 'org-mode-hook 'cst/org-mode)
 
 ;; =========================
 ;; ======= PROG MODE =======
