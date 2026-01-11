@@ -1,6 +1,5 @@
 ;;; init.el --- custom config  -*- lexical-binding: t; -*-
 
-
 ;; =========================
 ;; ======= Utilities =======
 ;; =========================
@@ -139,10 +138,10 @@
 ;; looks
 
 (use-package catppuccin-theme
+  :custom
+  (catppuccin-flavor 'mocha)
   :config
-  (setq catppuccin-flavor 'mocha))
-
-(load-theme 'catppuccin t)
+  (load-theme 'catppuccin t))
 
 (use-package nerd-icons
   :ensure t
@@ -189,8 +188,7 @@
 
   ;; Use visual line motions even outside of visual-line-mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-  )
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
 
 (use-package evil-collection
   :after evil
@@ -215,6 +213,7 @@
   (lsp-keymap-prefix "C-c l")
   (lsp-eldoc-enable-hover t)
   (lsp-headerline-breadcrumb-enable nil)
+  (lsp-diagnostic-provider :flycheck)
   :config
   (lsp-enable-which-key-integration t)
   (evil-define-key 'normal 'lsp-mode (kbd "K") 'lsp-ui-doc-glance)
@@ -321,6 +320,13 @@
   ;; (corfu-history-mode)
   ;; (corfu-popupinfo-mode)
   )
+
+;; =========================
+;; ======= ORG MODE ========
+;; =========================
+
+;; add some keybinds
+(evil-define-key 'normal 'org-mode (kbd "<leader>oa") 'org-agenda)
 
 ;; =========================
 ;; ======= PROG MODE =======
