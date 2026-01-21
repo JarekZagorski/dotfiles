@@ -158,7 +158,7 @@
   (hl-todo-keyword-faces
    `(("TODO"       warning bold)
      ("FIXME"      error bold)
-     ("BUG"      error bold)
+     ("BUG"        error bold)
      ("HACK"       font-lock-constant-face bold)
      ("REVIEW"     font-lock-keyword-face bold)
      ("NOTE"       success bold)
