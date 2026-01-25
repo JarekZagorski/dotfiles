@@ -26,11 +26,11 @@
 
 ;; Do not show startup message
 (setq inhibit-startup-message t)
-
 ;; improve emacs' easy customization
 (setq custom-file (cst/locate-file "custom.el"))
 (load custom-file)
-;; (setq scroll-margin 12)
+;; cleanup backup files
+(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
 
 ;; =========================
 ;; ====== TREE SITTER ======
@@ -164,6 +164,11 @@
      ("NOTE"       success bold)
      ("DEPRECATED" font-lock-doc-face bold))))
 
+(defun evil-paste-clipboard ()
+  "Paste before on clipboard content"
+  (interactive)
+  (evil-paste-after nil ?+))
+
 ;; Download and Enable Evil
 (use-package evil
   :ensure t
@@ -185,6 +190,16 @@
 
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+  ;; copy and paste commands to mimic terminal behavior
+  (evil-define-key '(normal visual) 'global (kbd "C-S-c") 'evil-yank)
+  (evil-define-key 'visual 'global (kbd "C-S-v") 'evil-paste-clipboard)
+  (evil-define-key 'insert 'global (kbd "C-S-v") 'evil-paste-clipboard)
+  
+  ;; (evil-define-key 'command 'global (kbd "<C-S-v>") 'evil-yank)
+  ;; vim.keymap.set('v', '<C-S-v>', '"+P', { desc = 'Paste from clipboard' })
+  ;; vim.keymap.set('i', '<C-S-v>', '<ESC>"+Pa', { desc = 'Paste from clipboard' })
+  ;; vim.keymap.set('c', '<C-S-v>', '<C-r>+', { desc = 'Paste from clipboard' })
 
   ;; Use visual line motions even outside of visual-line-mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
@@ -312,13 +327,13 @@
 
 (use-package corfu
   ;; Optional customizations
-  ;; :custom
-  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  :custom
+  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
   ;; (corfu-preview-current nil)    ;; Disable current candidate preview
   ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
-  ;; (corfu-on-exact-match 'insert) ;; Configure handling of exact matches
+  (corfu-on-exact-match 'insert) ;; Configure handling of exact matches
 
   ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
   ;; :hook ((prog-mode . corfu-mode)
@@ -370,6 +385,16 @@
 (use-package zig-mode
   :mode "\\.\\(zig\\|zon\\)\\'")
 
+(defun open-test-file ()
+  "Opens golang test file for current file."
+  (interactive nil 'go-ts-mode)
+  (let ((dir (file-name-directory buffer-file-name))
+		(extension (file-name-extension buffer-file-name))
+		(name (file-name-base buffer-file-name)))
+	(when (string-match-p "_test$" name)
+	  (error "Already in test file!"))
+	(find-file (concat dir name "_test." extension))))
+
 (use-package go-ts-mode
   :mode "\\.go\\'"
   :init
@@ -377,6 +402,9 @@
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
   :config
   (setq go-ts-mode-indent-offset 4))
+
+(use-package templ-ts-mode
+  :mode "\\.templ\\'")
 
 (use-package lua-mode
   :interpreter "lua"
