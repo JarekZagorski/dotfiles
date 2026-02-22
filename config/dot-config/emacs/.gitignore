@@ -10,3 +10,6 @@ transient/
 recentf.eld
 history
 .local/
+etc/
+var/
+tmp/
