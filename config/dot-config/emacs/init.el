@@ -418,4 +418,14 @@
   :mode "\\.cs\\'"
   :hook (csharp-ts-mode . lsp-deferred))
 
+(use-package tuareg
+  :mode
+  (("\\.ocamlinit\\'" . tuareg-mode))
+  :hook
+  (tuareg-mode . lsp-deferred))
+
+(use-package merlin
+  :after tuareg
+  :hook (tuareg-mode . merlin-mode))
+
 ;;; init.el ends here
