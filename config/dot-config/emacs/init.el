@@ -52,6 +52,7 @@
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+        (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
         (gitcommit "https://github.com/gbprod/tree-sitter-gitcommit")))
 
 ;; =========================
@@ -239,7 +240,8 @@
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :hook ((go-ts-mode . lsp-deferred)
-		 (zig-mode . lsp-deferred))
+		 (zig-mode . lsp-deferred)
+		 (csharp-ts-mode . lsp-deferred))
   :custom
   (lsp-keymap-prefix "C-c l")
   (lsp-eldoc-enable-hover t)
@@ -409,5 +411,9 @@
 (use-package lua-mode
   :interpreter "lua"
   :mode "\\.lua\\'")
+
+(use-package csharp-ts-mode
+  :ensure nil
+  :mode "\\.cs\\'")
 
 ;;; init.el ends here
