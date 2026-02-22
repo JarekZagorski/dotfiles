@@ -415,6 +415,7 @@
 
 (use-package csharp-ts-mode
   :ensure nil
-  :mode "\\.cs\\'")
+  :mode "\\.cs\\'"
+  :hook (csharp-ts-mode . lsp-deferred))
 
 ;;; init.el ends here
