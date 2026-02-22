@@ -428,4 +428,23 @@
   :after tuareg
   :hook (tuareg-mode . merlin-mode))
 
+(use-package opam-switch-mode
+  :after tuareg
+  :hook (tuareg-mdoe . opam-switch-mode))
+
+;; This uses Merlin internally
+(use-package flycheck-ocaml
+  :ensure t
+  :config
+  (flycheck-ocaml-setup))
+
+;; Major mode for editing Dune project files
+(use-package dune
+  :ensure t)
+
+(use-package utop
+  :ensure t
+  :init
+  (setq utop-command "opam exec -- dune utop . -- -emacs"))
+
 ;;; init.el ends here
