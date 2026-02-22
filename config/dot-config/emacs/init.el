@@ -239,14 +239,12 @@
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :hook ((go-ts-mode . lsp-deferred)
-		 (zig-mode . lsp-deferred)
-		 (csharp-ts-mode . lsp-deferred))
   :custom
   (lsp-keymap-prefix "C-c l")
   (lsp-eldoc-enable-hover t)
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-diagnostic-provider :flycheck)
+  (lsp-completion-provider :none)
   :config
   (lsp-enable-which-key-integration t)
   (evil-define-key 'normal 'lsp-mode (kbd "K") 'lsp-ui-doc-glance)
@@ -385,7 +383,8 @@
 ;; =========================
 
 (use-package zig-mode
-  :mode "\\.\\(zig\\|zon\\)\\'")
+  :mode "\\.\\(zig\\|zon\\)\\'"
+  :hook (zig-mode . lsp-deferred))
 
 (defun open-test-file ()
   "Opens golang test file for current file."
@@ -399,6 +398,8 @@
 
 (use-package go-ts-mode
   :mode "\\.go\\'"
+  :hook
+  (go-ts-mode . lsp-deferred)
   :init
   ;; because cannot put in :mode block
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
