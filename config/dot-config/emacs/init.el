@@ -243,6 +243,7 @@
   (lsp-keymap-prefix "C-c l")
   (lsp-eldoc-enable-hover t)
   (lsp-headerline-breadcrumb-enable nil)
+  (lsp-lens-enable nil)
   (lsp-diagnostic-provider :flycheck)
   (lsp-completion-provider :none)
   :config
@@ -446,5 +447,17 @@
   :ensure t
   :init
   (setq utop-command "opam exec -- dune utop . -- -emacs"))
+
+(use-package eshell
+  :ensure nil
+  :init
+  ;; enable coloring for eshell
+  (add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color"))))
+
+;; =========================
+;; ======== (MA)GIT ========
+;; =========================
+
+(use-package magit)
 
 ;;; init.el ends here
