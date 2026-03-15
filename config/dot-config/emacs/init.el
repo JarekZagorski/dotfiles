@@ -410,6 +410,7 @@
   :mode "\\.cs\\'"
   :hook (csharp-ts-mode . lsp-deferred))
 
+;; ocaml mode
 (use-package tuareg
   :mode
   (("\\.ocamlinit\\'" . tuareg-mode))
@@ -426,16 +427,18 @@
 
 ;; This uses Merlin internally
 (use-package flycheck-ocaml
-  :ensure t
+  :after tuareg
   :config
   (flycheck-ocaml-setup))
 
 ;; Major mode for editing Dune project files
 (use-package dune
-  :ensure t)
+  :ensure t
+  :after tuareg)
 
 (use-package utop
   :ensure t
+  :after tuareg
   :custom
   (utop-command "opam exec -- dune utop . -- -emacs"))
 
@@ -447,14 +450,24 @@
 
 (use-package eshell
   :ensure nil
-  :init
+  :hook
   ;; enable coloring for eshell
-  (add-hook 'eshell-mode-hook (lambda () (setenv "TERM" "xterm-256color"))))
+  (eshell-mode . (lambda () (setenv "TERM" "xterm-256color"))))
 
 ;; =========================
 ;; ======== (MA)GIT ========
 ;; =========================
 
-(use-package magit)
+; (use-package magit)
+
+;; =========================
+;; ======== COMMAND ========
+;; =========================
+
+(defun open-user-init ()
+  "Opens init.el file."
+  (interactive)
+  (find-file user-init-file))
+
 
 ;;; init.el ends here
