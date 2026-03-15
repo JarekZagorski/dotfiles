@@ -166,7 +166,7 @@
      ("DEPRECATED" font-lock-doc-face bold))))
 
 (defun evil-paste-clipboard ()
-  "Paste before on clipboard content"
+  "Paste before on clipboard content."
   (interactive)
   (evil-paste-after nil ?+))
 
@@ -230,8 +230,8 @@
   (lsp-lens-enable nil)
   (lsp-diagnostic-provider :flycheck)
   (lsp-completion-provider :none)
-  :config
   (lsp-enable-which-key-integration t)
+  :config
   (evil-define-key 'normal 'lsp-mode (kbd "K") 'lsp-ui-doc-glance)
   (evil-define-key 'normal 'lsp-mode (kbd "gdd") 'lsp-find-definition)
   (evil-define-key 'normal 'lsp-mode (kbd "gdt") 'lsp-find-type-definition)
@@ -240,9 +240,11 @@
   (evil-define-key 'normal 'lsp-mode (kbd "gr") 'lsp-find-references)
 
   ;; code actions
-  (evil-define-key 'normal 'lsp-mode (kbd "<leader>ca") 'lsp-execute-code-action))
+  (evil-define-key 'normal 'lsp-mode (kbd "<leader>ca") 'lsp-execute-code-action)
+  (evil-define-key 'normal 'lsp-mode (kbd "<leader>cr") 'lsp-rename))
 
 (use-package lsp-ui
+  :after lsp-mode
   :config
   (lsp-ui-doc-enable t))
 
@@ -367,13 +369,18 @@
 ;; ======= PROG MODE =======
 ;; =========================
 
+(use-package prog-mode
+  :ensure nil
+  :config
+  (electric-pair-local-mode t))
+
 (use-package zig-mode
   :mode "\\.\\(zig\\|zon\\)\\'"
   :hook (zig-mode . lsp-deferred))
 
 (defun open-test-file ()
   "Opens golang test file for current file."
-  (interactive nil 'go-ts-mode)
+  (interactive nil go-ts-mode)
   (let ((dir (file-name-directory buffer-file-name))
 		(extension (file-name-extension buffer-file-name))
 		(name (file-name-base buffer-file-name)))
@@ -429,8 +436,14 @@
 
 (use-package utop
   :ensure t
+  :custom
+  (utop-command "opam exec -- dune utop . -- -emacs"))
+
+(use-package rust-mode
+  :hook
+  (rust-ts-mode . lsp-deferred)
   :init
-  (setq utop-command "opam exec -- dune utop . -- -emacs"))
+  (setq rust-mode-treesitter-derive t))
 
 (use-package eshell
   :ensure nil
