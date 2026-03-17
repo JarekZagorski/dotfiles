@@ -225,8 +225,8 @@
 	 (fg-line-number-inactive :tk-fg-gutter)
 	 (fg-line-number-active :tk-fg-gutter)
 	 (bg-line-number-inactive nil)
-	 (bg-line-number-active :tk-bg-highlight)
-	 ;; programming
+	 (bg-line-number-active :tk-bg)
+	 ;; prose
 	 (builtin :tk-cyan)
 	 (comment :tk-comment)
 	 (constant :tk-orange)
@@ -238,7 +238,11 @@
 	 (string :tk-green)
 	 (type :tk-teal)
 	 (variable fg-main)
-	 (warning :tk-yellow)))
+	 (warning :tk-yellow)
+	 ;; programming
+	 (fg-link-visited :tk-purple)
+	 (underline-link-visited :tk-purple)
+	 (fg-prose-verbatim constant)))
   ;; 9d7cd8
   :config
   (add-hook 'enable-theme-functions
@@ -248,6 +252,14 @@
 				  (set-frame-parameter nil 'alpha-background 85))))
   :init
   (load-theme 'modus-vivendi t))
+
+;; just for colorscheme testing purposes
+(defun open-uasser-init ()
+  ;; comment
+  "  docstring."
+  (interactive)
+  (find-file user-init-file))
+
 
 (use-package nerd-icons
   :ensure t
