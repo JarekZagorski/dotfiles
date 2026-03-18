@@ -141,7 +141,8 @@
 ;; Bootstrap 'use-package'
 (eval-after-load 'gnutls
   '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
-(setq use-package-always-ensure t)
+(setopt use-package-always-ensure t)
+(setopt use-package-compute-statistics t)
 
 ;; looks
 
@@ -335,6 +336,7 @@
   (evil-collection-init))
 
 (use-package flycheck
+  :defer t
   :config
   (evil-define-key 'normal 'flycheck-mode (kbd "]d") 'flycheck-next-error)
   (evil-define-key 'normal 'flycheck-mode (kbd "[d") 'flycheck-previous-error))
@@ -573,6 +575,7 @@
   (setq rust-mode-treesitter-derive t))
 
 (use-package eshell
+  :defer t
   :ensure nil
   :hook
   ;; enable coloring for eshell
