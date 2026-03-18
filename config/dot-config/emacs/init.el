@@ -20,18 +20,29 @@
 ;; ======== CLEANUP ========
 ;; =========================
 
+(setq config/data-dir "var"
+	  config/temp-dir "tmp")
+
+(defun config/get-data (filename)
+  "Get FILENAME under `config/data-dir' directory."
+  (locate-user-emacs-file (concat config/data-dir "/" filename)))
+
+(defun config/get-temp (filename)
+  "Get FILENAME under `config/temp-dir' directory."
+  (locate-user-emacs-file (concat config/data-dir "/" filename)))
+
 ;; improve emacs' easy customization
 (setq custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file)
 
 ;; `tmp' is for temporary / unnecessary files
-(setopt backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory)))
-		auto-save-list-file-prefix (locate-user-emacs-file "tmp/auto-save-list/.saves-"))
+(setopt backup-directory-alist `(("." . ,(config/get-temp "backups/")))
+		auto-save-list-file-prefix (config/get-temp "auto-save-list/.saves-"))
 
 ;; `var' will be where we keep data files for plugins
-(setopt project-list-file (locate-user-emacs-file "var/projects")
-		eshell-directory-name (locate-user-emacs-file "var/eshell/")
-		recentf-save-file (locate-user-emacs-file "var/recentf"))
+(setopt project-list-file (config/get-data "projects")
+		eshell-directory-name (config/get-data "eshell/")
+		recentf-save-file (config/get-data "recentf"))
 
 ;; drop unused litter
 (setopt create-lockfiles nil    ;; drop file locking - emacs only feature, unnecessary
@@ -349,6 +360,7 @@
   (lsp-completion-provider :none)
   (lsp-enable-which-key-integration t)
   (lsp-modeline-code-action-icons-enable nil)
+  (lsp-session-file (config/get-data (f-filename lsp-session-file)))
   :config
   (evil-define-key 'normal 'lsp-mode (kbd "K") 'lsp-ui-doc-glance)
   (evil-define-key 'normal 'lsp-mode (kbd "gdd") 'lsp-find-definition)
