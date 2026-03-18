@@ -234,23 +234,37 @@
 	 (fg-line-number-active :tk-fg-gutter)
 	 (bg-line-number-inactive nil)
 	 (bg-line-number-active :tk-bg)
-	 ;; prose
+	 ;; prominent??
+	 (bg-prominent-err nil)
+	 (fg-prominent-err err)
+	 (bg-prominent-warning nil)
+	 (fg-prominent-warning warning)
+	 (bg-prominent-note nil)
+	 (fg-prominent-note info)
+	 ;; programming
 	 (builtin :tk-cyan)
 	 (comment :tk-comment)
 	 (constant :tk-orange)
 	 (docstring :tk-blue6)
-	 (err :tk-red)
 	 (fnname :tk-blue)
 	 (keyword :tk-purple)
 	 (number :tk-orange)
 	 (string :tk-green)
 	 (type :tk-teal)
 	 (variable fg-main)
+	 ;; general
+	 (err :tk-red)
+	 (info :tk-blue2)
 	 (warning :tk-yellow)
-	 ;; programming
+	 (underline-err err)
+	 (underline-note info)
+	 (underline-warning warning)
+	 ;; prose
 	 (fg-link-visited :tk-purple)
-	 (underline-link-visited :tk-purple)
-	 (fg-prose-verbatim constant)))
+	 (fg-prose-verbatim constant)
+	 (prose-todo :tk-blue)
+	 (prose-done :tk-green)
+	 (underline-link-visited :tk-purple)))
   :config
   (add-hook 'enable-theme-functions
 			(lambda (theme)
