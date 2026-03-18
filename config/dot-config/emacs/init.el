@@ -4,9 +4,9 @@
 ;; ======= Utilities =======
 ;; =========================
 
-(defun cst/locate-file (filename)
-  "Combines Emacs runtime path with provided FILENAME."
-  (concat user-emacs-directory filename))
+(defun config-path (filename)
+   "Combines Emacs runtime path with provided FILENAME."
+  (expand-file-name filename user-emacs-directory))
 
 ;; =========================
 ;; ====== Performance ======
@@ -24,13 +24,25 @@
 
 (add-hook 'emacs-startup-hook #'cst/display-startup-time)
 
-;; Do not show startup message
-(setq inhibit-startup-message t)
+;; =========================
+;; ======== CLEANUP ========
+;; =========================
+
 ;; improve emacs' easy customization
-(setq custom-file (cst/locate-file "custom.el"))
+(setq custom-file (config-path "custom.el"))
 (load custom-file)
-;; cleanup backup files
-(setq backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory))))
+
+;; `tmp' is for temporary / unnecessary files
+(setopt backup-directory-alist `(("." . ,(expand-file-name "tmp/backups/" user-emacs-directory)))
+		auto-save-list-file-prefix (locate-user-emacs-file "tmp/auto-save-list/.saves-"))
+
+;; `var' will be where we keep data files for plugins
+(setopt project-list-file (locate-user-emacs-file "var/projects")
+		eshell-directory-name (locate-user-emacs-file "var/eshell/"))
+
+;; drop unused litter
+(setopt create-lockfiles nil    ;; drop file locking - emacs only feature, unnecessary
+		inhibit-startup-screen t)
 
 ;; =========================
 ;; ====== TREE SITTER ======
@@ -94,10 +106,10 @@
 ; (load-theme 'deeper-blue t)
 
 ;; add themes subdirectory to known themes path
-(add-to-list 'load-path (cst/locate-file "themes"))
-(add-to-list 'custom-theme-load-path (cst/locate-file "themes"))
+(add-to-list 'load-path (config-path "themes"))
+(add-to-list 'custom-theme-load-path (config-path "themes"))
 ;; add plugins subdirectory
-(add-to-list 'load-path (cst/locate-file "plugins"))
+(add-to-list 'load-path (config-path "plugins"))
 
 ;; =========================
 ;; ======== OPTIONS ========
@@ -259,7 +271,6 @@
   "  docstring."
   (interactive)
   (find-file user-init-file))
-
 
 (use-package nerd-icons
   :ensure t
@@ -586,6 +597,5 @@
   "Opens init.el file."
   (interactive)
   (find-file user-init-file))
-
 
 ;;; init.el ends here
