@@ -1,14 +1,6 @@
 ;;; init.el --- custom config  -*- lexical-binding: t; -*-
 
 ;; =========================
-;; ======= Utilities =======
-;; =========================
-
-(defun config-path (filename)
-   "Combines Emacs runtime path with provided FILENAME."
-  (expand-file-name filename user-emacs-directory))
-
-;; =========================
 ;; ====== Performance ======
 ;; =========================
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -29,7 +21,7 @@
 ;; =========================
 
 ;; improve emacs' easy customization
-(setq custom-file (config-path "custom.el"))
+(setq custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file)
 
 ;; `tmp' is for temporary / unnecessary files
@@ -38,7 +30,8 @@
 
 ;; `var' will be where we keep data files for plugins
 (setopt project-list-file (locate-user-emacs-file "var/projects")
-		eshell-directory-name (locate-user-emacs-file "var/eshell/"))
+		eshell-directory-name (locate-user-emacs-file "var/eshell/")
+		recentf-save-file (locate-user-emacs-file "var/recentf"))
 
 ;; drop unused litter
 (setopt create-lockfiles nil    ;; drop file locking - emacs only feature, unnecessary
@@ -102,14 +95,11 @@
 (set-frame-parameter nil 'alpha-background 68)
 (set-frame-parameter nil 'undecorated t)
 
-;; theme
-; (load-theme 'deeper-blue t)
-
 ;; add themes subdirectory to known themes path
-(add-to-list 'load-path (config-path "themes"))
-(add-to-list 'custom-theme-load-path (config-path "themes"))
+(add-to-list 'load-path (locate-user-emacs-file "themes"))
+(add-to-list 'custom-theme-load-path (locate-user-emacs-file "themes"))
 ;; add plugins subdirectory
-(add-to-list 'load-path (config-path "plugins"))
+(add-to-list 'load-path (locate-user-emacs-file "plugins"))
 
 ;; =========================
 ;; ======== OPTIONS ========
@@ -255,7 +245,6 @@
 	 (fg-link-visited :tk-purple)
 	 (underline-link-visited :tk-purple)
 	 (fg-prose-verbatim constant)))
-  ;; 9d7cd8
   :config
   (add-hook 'enable-theme-functions
 			(lambda (theme)
