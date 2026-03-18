@@ -84,7 +84,7 @@
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 ;; font
-(add-to-list 'default-frame-alist '(font . "Fira Code 12" ))
+(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font 12"))
 
 ;; set window opacity
 (set-frame-parameter nil 'alpha-background 68)
@@ -263,11 +263,11 @@
 
 (use-package nerd-icons
   :ensure t
-  :custom
   ;; The Nerd Font you want to use in GUI
   ;; "Symbols Nerd Font Mono" is the default and is recommended
   ;; but you can use any other Nerd Font if you want
-  (nerd-icons-font-family "Fira Code"))
+  :custom
+  (nerd-icons-font-family "FiraCode Nerd Font"))
 
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode)
@@ -348,6 +348,7 @@
   (lsp-diagnostic-provider :flycheck)
   (lsp-completion-provider :none)
   (lsp-enable-which-key-integration t)
+  (lsp-modeline-code-action-icons-enable nil)
   :config
   (evil-define-key 'normal 'lsp-mode (kbd "K") 'lsp-ui-doc-glance)
   (evil-define-key 'normal 'lsp-mode (kbd "gdd") 'lsp-find-definition)
