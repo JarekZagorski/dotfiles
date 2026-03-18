@@ -1,15 +1,9 @@
-recentf
 elpa/
-eshell/
 eln-cache/
-auto-save-list/
 truncate/
 .lsp-session-v1
 tree-sitter/
-transient/
-recentf.eld
 history
 .local/
-etc/
 var/
 tmp/
