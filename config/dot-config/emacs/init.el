@@ -1,5 +1,9 @@
 ;;; init.el --- custom config  -*- lexical-binding: t; -*-
 
+;;; Commentary:
+
+;;; Code:
+
 ;; =========================
 ;; ====== Performance ======
 ;; =========================
@@ -24,7 +28,7 @@
 	  config/temp-dir "tmp")
 
 (defun var (filename)
-  "get FILENAME under `config/data-dir' directory."
+  "Get FILENAME under `config/data-dir' directory."
   (locate-user-emacs-file (concat config/data-dir "/" filename)))
 
 (defun tmp (filename)
