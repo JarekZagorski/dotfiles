@@ -23,11 +23,11 @@
 (setq config/data-dir "var"
 	  config/temp-dir "tmp")
 
-(defun config/get-data (filename)
-  "Get FILENAME under `config/data-dir' directory."
+(defun var (filename)
+  "get FILENAME under `config/data-dir' directory."
   (locate-user-emacs-file (concat config/data-dir "/" filename)))
 
-(defun config/get-temp (filename)
+(defun tmp (filename)
   "Get FILENAME under `config/temp-dir' directory."
   (locate-user-emacs-file (concat config/data-dir "/" filename)))
 
@@ -36,13 +36,13 @@
 (load custom-file)
 
 ;; `tmp' is for temporary / unnecessary files
-(setopt backup-directory-alist `(("." . ,(config/get-temp "backups/")))
-		auto-save-list-file-prefix (config/get-temp "auto-save-list/.saves-"))
+(setopt backup-directory-alist `(("." . ,(tmp "backups/")))
+		auto-save-list-file-prefix (tmp "auto-save-list/.saves-"))
 
 ;; `var' will be where we keep data files for plugins
-(setopt project-list-file (config/get-data "projects")
-		eshell-directory-name (config/get-data "eshell/")
-		recentf-save-file (config/get-data "recentf"))
+(setopt project-list-file (var "projects")
+		eshell-directory-name (var "eshell/")
+		recentf-save-file (var "recentf"))
 
 ;; drop unused litter
 (setopt create-lockfiles nil    ;; drop file locking - emacs only feature, unnecessary
@@ -139,8 +139,6 @@
 (package-initialize)
 
 ;; Bootstrap 'use-package'
-(eval-after-load 'gnutls
-  '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
 (setopt use-package-always-ensure t)
 (setopt use-package-compute-statistics t)
 
@@ -252,7 +250,7 @@
 	 (string :tk-green)
 	 (type :tk-teal)
 	 (variable fg-main)
-	 ;; general
+	 ;; error messages
 	 (err :tk-red)
 	 (info :tk-blue2)
 	 (warning :tk-yellow)
@@ -277,7 +275,7 @@
 ;; just for colorscheme testing purposes
 (defun open-uasser-init ()
   ;; comment
-  "  docstring."
+  "docstring."
   (interactive)
   (find-file user-init-file))
 
@@ -370,7 +368,7 @@
   (lsp-completion-provider :none)
   (lsp-enable-which-key-integration t)
   (lsp-modeline-code-action-icons-enable nil)
-  (lsp-session-file (config/get-data (f-filename lsp-session-file)))
+  (lsp-session-file (var (f-filename lsp-session-file)))
   :config
   (evil-define-key 'normal 'lsp-mode (kbd "K") 'lsp-ui-doc-glance)
   (evil-define-key 'normal 'lsp-mode (kbd "gdd") 'lsp-find-definition)
