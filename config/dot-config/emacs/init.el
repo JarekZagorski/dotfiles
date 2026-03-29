@@ -7,7 +7,6 @@
 ;; =========================
 ;; ====== Performance ======
 ;; =========================
-(setq gc-cons-threshold (* 50 1000 1000))
 
 ;; info on startup time
 (defun cst/display-startup-time ()
@@ -19,6 +18,12 @@
 	   gcs-done))
 
 (add-hook 'emacs-startup-hook #'cst/display-startup-time)
+
+;; force full package load when running as daemon
+(setq my/force-load (daemonp))
+
+(when my/force-load
+  (setq use-package-always-demand t))
 
 ;; =========================
 ;; ======== CLEANUP ========
@@ -41,7 +46,7 @@
 
 ;; `tmp' is for temporary / unnecessary files
 (setopt backup-directory-alist `(("." . ,(tmp "backups/")))
-		auto-save-list-file-prefix (tmp "auto-save-list/.saves-"))
+ 		auto-save-list-file-prefix (tmp "auto-save-list/.saves-"))
 
 ;; `var' will be where we keep data files for plugins
 (setopt project-list-file (var "projects")
@@ -104,7 +109,7 @@
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 ;; font
-(add-to-list 'default-frame-alist '(font . "FiraCode Nerd Font 12"))
+(add-to-list 'default-frame-alist '(font . "Fira Code 12"))
 
 ;; set window opacity
 (set-frame-parameter nil 'alpha-background 68)
@@ -236,6 +241,8 @@
 	 (fg-line-number-active :tk-fg-gutter)
 	 (bg-line-number-inactive nil)
 	 (bg-line-number-active :tk-bg)
+	 ;; fringes
+	 (fringe bg-main)
 	 ;; prominent??
 	 (bg-prominent-err nil)
 	 (fg-prominent-err err)
@@ -277,7 +284,7 @@
   (load-theme 'modus-vivendi t))
 
 ;; just for colorscheme testing purposes
-(defun open-uasser-init ()
+(defun asdfffffffffffffffffffff ()
   ;; comment
   "docstring."
   (interactive)
@@ -289,7 +296,7 @@
   ;; "Symbols Nerd Font Mono" is the default and is recommended
   ;; but you can use any other Nerd Font if you want
   :custom
-  (nerd-icons-font-family "FiraCode Nerd Font"))
+  (nerd-icons-font-family "Fira Code"))
 
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode)
@@ -352,7 +359,7 @@
   (evil-collection-init))
 
 (use-package flycheck
-  :defer t
+  :defer (not my/force-load)
   :config
   (evil-define-key 'normal 'flycheck-mode (kbd "]d") 'flycheck-next-error)
   (evil-define-key 'normal 'flycheck-mode (kbd "[d") 'flycheck-previous-error))
@@ -372,7 +379,7 @@
   (lsp-completion-provider :none)
   (lsp-enable-which-key-integration t)
   (lsp-modeline-code-action-icons-enable nil)
-  (lsp-session-file (var (f-filename lsp-session-file)))
+  (lsp-session-file (var "lsp-session-v1"))
   :config
   (evil-define-key 'normal 'lsp-mode (kbd "K") 'lsp-ui-doc-glance)
   (evil-define-key 'normal 'lsp-mode (kbd "gdd") 'lsp-find-definition)
@@ -511,10 +518,8 @@
 ;; ======= PROG MODE =======
 ;; =========================
 
-(use-package prog-mode
-  :ensure nil
-  :config
-  (electric-pair-local-mode t))
+(add-hook 'prog-mode-hook (lambda () (toggle-truncate-lines t)))
+(add-hook 'prog-mode-hook #'electric-pair-local-mode)
 
 (use-package zig-mode
   :mode "\\.\\(zig\\|zon\\)\\'"
@@ -584,14 +589,8 @@
   :custom
   (utop-command "opam exec -- dune utop . -- -emacs"))
 
-(use-package rust-mode
-  :hook
-  (rust-ts-mode . lsp-deferred)
-  :init
-  (setq rust-mode-treesitter-derive t))
-
 (use-package eshell
-  :defer t
+  :defer (not my/force-load)
   :ensure nil
   :hook
   ;; enable coloring for eshell
