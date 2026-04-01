@@ -258,8 +258,9 @@
 	 (fnname :tk-blue)
 	 (keyword :tk-purple)
 	 (number :tk-orange)
+	 (property :tk-green1)
 	 (string :tk-green)
-	 (type :tk-teal)
+	 (type :tk-blue1)
 	 (variable fg-main)
 	 ;; error messages
 	 (err :tk-red)
@@ -521,6 +522,9 @@
 (add-hook 'prog-mode-hook (lambda () (toggle-truncate-lines t)))
 (add-hook 'prog-mode-hook #'electric-pair-local-mode)
 
+;; treesit
+(setopt treesit-font-lock-level 4)
+
 (use-package zig-mode
   :mode "\\.\\(zig\\|zon\\)\\'"
   :hook (zig-mode . lsp-deferred))
@@ -600,7 +604,7 @@
 ;; ======== (MA)GIT ========
 ;; =========================
 
-; (use-package magit)
+(use-package magit)
 
 ;; =========================
 ;; ======== COMMAND ========

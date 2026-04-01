@@ -12,10 +12,20 @@
 	  gc-cons-percentage 1.0)
 
 ;; set better gc defaults after init
-(add-hook 'after-init-hook
-		  (lambda ()
-			(setq gc-cons-threshold (* 100 1024 1024)
-				  gc-cons-percentage 0.6)))
+(defun set-gc-options ()
+  (setq gc-cons-threshold (* 100 1024 1024)
+		gc-cons-percentage 0.1))
+
+(add-hook 'after-init-hook 'set-gc-options)
+
+;; avoid flashbang
+(defun avoid-flashbang ()
+  (setq mode-line-format nil)
+  (let ((bg "#16161e"))
+	(set-face-attribute 'default nil
+						:background bg
+						:foreground bg)))
+(avoid-flashbang)
 
 ;; single vc-backend helps improve startup speed
 (setq vc-handled-backends '(Git))
