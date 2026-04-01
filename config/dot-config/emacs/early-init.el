@@ -18,14 +18,8 @@
 
 (add-hook 'after-init-hook 'set-gc-options)
 
-;; avoid flashbang
-(defun avoid-flashbang ()
-  (setq mode-line-format nil)
-  (let ((bg "#16161e"))
-	(set-face-attribute 'default nil
-						:background bg
-						:foreground bg)))
-(avoid-flashbang)
+;; to avoid flashbang
+(add-to-list 'default-frame-alist '(background-color . "#16161e"))
 
 ;; single vc-backend helps improve startup speed
 (setq vc-handled-backends '(Git))

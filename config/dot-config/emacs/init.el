@@ -607,7 +607,9 @@
 ;; =========================
 
 (use-package magit
-  :defer (not my/force-load))
+  :defer (not my/force-load)
+  :custom
+  (git-commit-major-mode 'git-commit-ts-mode))
 
 ;; =========================
 ;; ======== COMMAND ========
