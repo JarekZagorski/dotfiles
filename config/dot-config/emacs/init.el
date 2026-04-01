@@ -133,7 +133,9 @@
 
 ;; marks tab as just inserting tab
 ;; for native emacs', set to 'indent-relative
-(setq indent-line-function 'insert-tab)
+(setq indent-line-function 'insert-tab
+	  ring-bell-function 'ignore
+	  use-short-answers t)
 
 ;; =========================
 ;; ==== CUSTOM PACKAGES ====
@@ -604,7 +606,8 @@
 ;; ======== (MA)GIT ========
 ;; =========================
 
-(use-package magit)
+(use-package magit
+  :defer (not my/force-load))
 
 ;; =========================
 ;; ======== COMMAND ========
