@@ -51,7 +51,8 @@
 ;; `var' will be where we keep data files for plugins
 (setopt project-list-file (var "projects")
 		eshell-directory-name (var "eshell/")
-		recentf-save-file (var "recentf"))
+		recentf-save-file (var "recentf")
+		bookmark-default-file (var "bookmark"))
 
 ;; drop unused litter
 (setopt create-lockfiles nil    ;; drop file locking - emacs only feature, unnecessary
@@ -292,7 +293,7 @@
   ;; "Symbols Nerd Font Mono" is the default and is recommended
   ;; but you can use any other Nerd Font if you want
   :custom
-  (nerd-icons-font-family "Fira Code"))
+  (nerd-icons-font-family "Symbols Nerd Font"))
 
 (use-package hl-todo
   :hook (prog-mode . hl-todo-mode)
@@ -452,7 +453,7 @@
   ;; Configure a custom style dispatcher (see the Consult wiki)
   ;; (orderless-style-dispatchers '(+orderless-consult-dispatch orderless-affix-dispatch))
   ;; (orderless-component-separator #'orderless-escapable-split-on-space)
-  (completion-styles '(orderless basic))
+  (completion-styles '(flex orderless basic))
   (completion-category-overrides '((file (styles partial-completion))))
   (completion-category-defaults nil) ;; Disable defaults, use our settings
   (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
@@ -466,23 +467,17 @@
   ;; (corfu-preview-current nil)    ;; Disable current candidate preview
   ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
   (corfu-on-exact-match 'insert) ;; Configure handling of exact matches
-
-  ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
-  ;; :hook ((prog-mode . corfu-mode)
-  ;;        (shell-mode . corfu-mode)
-  ;;        (eshell-mode . corfu-mode))
-
+  (corfu-preselect 'prompt)
+  :bind
+  (:map corfu-map
+		("TAB" . corfu-next)
+		([tab] . corfu-next)
+		("S-TAB" . corfu-previous)
+		([backtab] . corfu-previous))
   :init
-
-  ;; Recommended: Enable Corfu globally.  Recommended since many modes provide
-  ;; Capfs and Dabbrev can be used globally (M-/).  See also the customization
-  ;; variable `global-corfu-modes' to exclude certain modes.
   (global-corfu-mode)
-
-  ;; Enable optional extension modes:
-  ;; (corfu-history-mode)
-  ;; (corfu-popupinfo-mode)
-  )
+  ;; extensions
+  (corfu-popupinfo-mode))
 
 ;; =========================
 ;; ======= ORG MODE ========
