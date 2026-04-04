@@ -104,17 +104,6 @@
 ;; ========= LOOKS =========
 ;; =========================
 
-(add-to-list 'default-frame-alist '(alpha-background . 68))
-(add-to-list 'default-frame-alist '(undecorated . t))
-(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-;; font
-(add-to-list 'default-frame-alist '(font . "Fira Code 12"))
-
-;; set window opacity
-(set-frame-parameter nil 'alpha-background 68)
-(set-frame-parameter nil 'undecorated t)
-
 ;; add themes subdirectory to known themes path
 (add-to-list 'load-path (locate-user-emacs-file "themes"))
 (add-to-list 'custom-theme-load-path (locate-user-emacs-file "themes"))

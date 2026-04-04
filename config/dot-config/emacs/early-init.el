@@ -20,6 +20,16 @@
 
 ;; to avoid flashbang
 (add-to-list 'default-frame-alist '(background-color . "#16161e"))
+;; good initials
+(add-to-list 'default-frame-alist '(alpha-background . 68))
+(add-to-list 'default-frame-alist '(undecorated . t))
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;; font
+(add-to-list 'default-frame-alist '(font . "Fira Code 12"))
+
+(setq initial-frame-alist (delete '(vertical-scroll-bars) initial-frame-alist))
+
 
 ;; single vc-backend helps improve startup speed
 (setq vc-handled-backends '(Git))
