@@ -13,7 +13,7 @@
  '(lsp-ui-doc-show-with-cursor nil)
  '(lsp-ui-doc-show-with-mouse nil)
  '(package-selected-packages
-   '(catppuccin-theme corfu evil-collection flycheck fzf
+   '(catppuccin-theme corfu doom-modeline evil-collection flycheck fzf
 					  git-commit-ts-mode git-modes hl-todo lsp-mode
 					  lsp-ui marginalia nerd-icons orderless
 					  stimmung-themes vertico zig-mode)))

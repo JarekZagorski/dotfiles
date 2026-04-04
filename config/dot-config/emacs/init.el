@@ -286,6 +286,10 @@
   :init
   (load-theme 'modus-vivendi t))
 
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
 ;; just for colorscheme testing purposes
 (defun asdfffffffffffffffffffff ()
   ;; comment
