@@ -359,7 +359,8 @@
   :defer (not my/force-load)
   :config
   (evil-define-key 'normal 'flycheck-mode (kbd "]d") 'flycheck-next-error)
-  (evil-define-key 'normal 'flycheck-mode (kbd "[d") 'flycheck-previous-error))
+  (evil-define-key 'normal 'flycheck-mode (kbd "[d") 'flycheck-previous-error)
+  (evil-define-key 'normal 'flycheck-mode (kbd "gl") 'flycheck-display-error-at-point))
 
 ;; =========================
 ;; ========== LSP ==========
@@ -377,6 +378,7 @@
   (lsp-enable-which-key-integration t)
   (lsp-modeline-code-action-icons-enable nil)
   (lsp-session-file (var "lsp-session-v1"))
+  (lsp-modeline-code-actions-enable nil)
   :config
   (evil-define-key 'normal 'lsp-mode (kbd "K") 'lsp-ui-doc-glance)
   (evil-define-key 'normal 'lsp-mode (kbd "gdd") 'lsp-find-definition)
