@@ -52,7 +52,8 @@
 (setopt project-list-file (var "projects")
 		eshell-directory-name (var "eshell/")
 		recentf-save-file (var "recentf")
-		bookmark-default-file (var "bookmark"))
+		bookmark-default-file (var "bookmark")
+		url-configuration-directory (var "url"))
 
 ;; drop unused litter
 (setopt create-lockfiles nil    ;; drop file locking - emacs only feature, unnecessary
@@ -188,7 +189,11 @@
 	 (tk-yellow "#e0af68")
 	 (tk-git-add "#449dab")
 	 (tk-git-change "#6183bb")
-	 (tk-git-delete "#914c54")))
+	 (tk-git-delete "#914c54")
+	 ;; mode-line
+	 (border-mode-line-active "#636388")
+	 (border-mode-line-inactive "#3d3d53")
+	 ))
   ;; this should be in `modus-operandi-palette-user' after EMACS 31
   (modus-operandi-palette-overrides
    '((tk-bg "#f2f2f2")
@@ -223,12 +228,17 @@
 	 (tk-red1 "#c64343")
 	 (tk-teal "#118c74")
 	 (tk-terminal-black "#a1a6c5")
-	 (tk-yellow "#8c6c3e")))
+	 (tk-yellow "#8c6c3e")
+	 ;; mode-line
+	 (border-mode-line-active "#6374a2")
+	 (border-mode-line-inactive "#99a4c3")
+	 ))
   (modus-themes-common-palette-overrides
    '(;; general
 	 (bg-main tk-bg)
 	 (fg-main tk-fg)
 	 (cursor tk-fg)
+	 (border tk-terminal-black)
 	 (fg-line-number-inactive tk-fg-gutter)
 	 (fg-line-number-active tk-fg-gutter)
 	 (bg-line-number-inactive nil)
@@ -266,7 +276,16 @@
 	 (fg-prose-verbatim constant)
 	 (prose-todo tk-blue)
 	 (prose-done tk-green)
-	 (underline-link-visited tk-purple)))
+	 (underline-link-visited tk-purple)
+	 ;; mode-line
+	 (bg-mode-line-active tk-bg-dark)
+	 (fg-mode-line-active tk-fg)
+	 (bg-mode-line-inactive tk-bg-dark1)
+	 (fg-mode-line-inactive tk-fg-dark)
+	 (modeline-err err)
+	 (modeline-warning warning)
+	 (modeline-info info)
+	 ))
   :config
   (add-hook 'enable-theme-functions
 			(lambda (theme)
