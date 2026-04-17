@@ -25,6 +25,16 @@
 (when my/force-load
   (setq use-package-always-demand t))
 
+;; some stuff taken from https://emacsredux.com/blog/2026/04/07/stealing-from-the-best-emacs-configs/
+
+;; ignore right-to-left text
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
+
+;; increase buffer size for faster lsp performance
+(setq read-process-output-max (* 4 1024 1024)) ; 4MB
+
 ;; =========================
 ;; ======== CLEANUP ========
 ;; =========================
@@ -99,7 +109,6 @@
 (blink-cursor-mode -1)
 (set-fringe-mode 10)
 ;; add line numbers
-(global-display-line-numbers-mode 1)
 (pixel-scroll-precision-mode 1)
 
 ;; =========================
@@ -382,6 +391,17 @@
   (evil-define-key 'normal 'flycheck-mode (kbd "gl") 'flycheck-display-error-at-point))
 
 ;; =========================
+;; ======= PLAINTEXT =======
+;; =========================
+
+(use-package visual-fill-column
+  :hook
+  (text-mode . visual-fill-column-mode)
+  (text-mode . visual-line-mode)
+  :custom
+  (visual-fill-column-center-text t))
+
+;; =========================
 ;; ========== LSP ==========
 ;; =========================
 
@@ -522,7 +542,8 @@
 
 (defun cst/org-mode ()
   "Customize org mode."
-  (org-indent-mode))
+  (org-indent-mode)
+  (setopt fill-column 100))
 
 (add-hook 'org-mode-hook 'cst/org-mode)
 
@@ -532,6 +553,11 @@
 
 (add-hook 'prog-mode-hook (lambda () (toggle-truncate-lines t)))
 (add-hook 'prog-mode-hook #'electric-pair-local-mode)
+
+(use-package prog-mode
+  :ensure nil
+  :hook
+  (prog-mode . display-line-numbers-mode))
 
 ;; treesit
 (setopt treesit-font-lock-level 4)
