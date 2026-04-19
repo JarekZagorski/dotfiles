@@ -100,7 +100,7 @@
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers 1)
 (which-key-mode 1)
-(column-number-mode 1) ;; for static size number column
+(column-number-mode 1)
 (setopt display-line-numbers-width 3)
 ;; disable unnecessary menu bars
 (menu-bar-mode -1)
@@ -246,6 +246,7 @@
    '(;; general
 	 (bg-main tk-bg)
 	 (fg-main tk-fg)
+	 (bg-dim tk-bg-dark1)
 	 (cursor tk-fg)
 	 (border tk-terminal-black)
 	 (fg-line-number-inactive tk-fg-gutter)
