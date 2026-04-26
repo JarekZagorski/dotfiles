@@ -8,3 +8,4 @@ history
 var/
 tmp/
 .cache/
+custom.el
