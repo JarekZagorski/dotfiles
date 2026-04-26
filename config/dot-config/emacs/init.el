@@ -305,6 +305,13 @@
   :init
   (load-theme 'modus-vivendi t))
 
+(use-package auto-dark
+  :ensure t
+  :custom
+  (auto-dark-themes '((modus-vivendi) (modus-operandi)))
+  (auto-dark-polling-interval-seconds 5)
+  :init (auto-dark-mode))
+
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
