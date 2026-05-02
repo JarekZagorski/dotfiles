@@ -90,6 +90,7 @@
         (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
         (yaml "https://github.com/ikatyang/tree-sitter-yaml")
         (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
+		(rust "https://github.com/tree-sitter/tree-sitter-rust")
         (gitcommit "https://github.com/gbprod/tree-sitter-gitcommit")))
 
 ;; =========================
@@ -391,6 +392,11 @@
   :config
   (evil-collection-init))
 
+(use-package evil-commentary
+  :ensure t
+  :init
+  (evil-commentary-mode))
+
 (use-package flycheck
   :defer (not my/force-load)
   :config
@@ -555,6 +561,8 @@
 
 (add-hook 'org-mode-hook 'cst/org-mode)
 
+(use-package denote)
+
 ;; =========================
 ;; ======= PROG MODE =======
 ;; =========================
@@ -644,6 +652,13 @@
   :hook
   ;; enable coloring for eshell
   (eshell-mode . (lambda () (setenv "TERM" "xterm-256color"))))
+
+(use-package rust-mode
+  :ensure nil
+  :hook (rust-mode . lsp-deferred)
+  ;; :init
+  ;; (add-to-list 'major-mode-remap-alist '(rust-mode . rust-ts-mode))
+  )
 
 ;; =========================
 ;; ======== (MA)GIT ========
