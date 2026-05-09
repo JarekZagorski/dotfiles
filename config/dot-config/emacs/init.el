@@ -626,6 +626,29 @@
   :mode "\\.\\(zig\\|zon\\)\\'"
   :hook (zig-mode . lsp-deferred))
 
+(use-package go-ts-mode
+  :mode "\\.go\\'"
+  :hook
+  (go-ts-mode . lsp-deferred)
+  :init
+  ;; because cannot put in :mode block
+  (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
+  :config
+  (advice-add 'lsp-find-definition :after 'open-templ-from-compiled)
+  (advice-add 'lsp-find-definition :after (lambda () (message "ASDFASDFASDFASDF")))
+  (setq go-ts-mode-indent-offset 4))
+
+(use-package templ-ts-mode
+  :hook (templ-ts-mode . lsp-deferred)
+  :mode "\\.templ\\'"
+  :init
+  (require 'lsp-mode)
+  (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "templ"))
+  (lsp-register-client (make-lsp-client
+						:new-connection (lsp-stdio-connection '("go" "tool" "templ" "lsp"))
+						:activation-fn (lsp-activate-on "templ")
+						:server-id 'templ-ls)))
+
 (defun open-test-file ()
   "Opens golang test file for current file."
   (interactive nil go-ts-mode)
@@ -636,18 +659,11 @@
 	  (error "Already in test file!"))
 	(find-file (concat dir name "_test." extension))))
 
-(use-package go-ts-mode
-  :mode "\\.go\\'"
-  :hook
-  (go-ts-mode . lsp-deferred)
-  :init
-  ;; because cannot put in :mode block
-  (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
-  :config
-  (setq go-ts-mode-indent-offset 4))
-
-(use-package templ-ts-mode
-  :mode "\\.templ\\'")
+(defun open-templ-from-compiled ()
+  "Opens source for compiled templ file."
+  (let ((base buffer-file-name))
+	(when (string-match-p "_templ.go" base)
+	  (find-file (string-replace "_templ.go" ".templ" base)))))
 
 (use-package lua-mode
   :interpreter "lua"
