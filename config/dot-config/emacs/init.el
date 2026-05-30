@@ -70,30 +70,6 @@
 		inhibit-startup-screen t)
 
 ;; =========================
-;; ====== TREE SITTER ======
-;; =========================
-
-(setq treesit-language-source-alist
-      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-        (cmake "https://github.com/uyha/tree-sitter-cmake")
-        (css "https://github.com/tree-sitter/tree-sitter-css")
-        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-        (go "https://github.com/tree-sitter/tree-sitter-go" "v0.25.0")
-        (html "https://github.com/tree-sitter/tree-sitter-html")
-        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-        (json "https://github.com/tree-sitter/tree-sitter-json")
-        (make "https://github.com/alemuller/tree-sitter-make")
-        (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-        (python "https://github.com/tree-sitter/tree-sitter-python")
-        (toml "https://github.com/tree-sitter/tree-sitter-toml")
-        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-        (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-        (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
-		(rust "https://github.com/tree-sitter/tree-sitter-rust")
-        (gitcommit "https://github.com/gbprod/tree-sitter-gitcommit")))
-
-;; =========================
 ;; ========= MODES =========
 ;; =========================
 
@@ -410,8 +386,8 @@
 
 (use-package visual-fill-column
   :hook
-  (text-mode . visual-fill-column-mode)
-  (text-mode . visual-line-mode)
+  (org-mode . visual-fill-column-mode)
+  (org-mode . visual-line-mode)
   :custom
   (visual-fill-column-center-text t))
 
@@ -442,7 +418,10 @@
 
   ;; code actions
   (evil-define-key 'normal 'lsp-mode (kbd "<leader>ca") 'lsp-execute-code-action)
-  (evil-define-key 'normal 'lsp-mode (kbd "<leader>cr") 'lsp-rename))
+  (evil-define-key 'normal 'lsp-mode (kbd "<leader>cr") 'lsp-rename)
+
+  (with-eval-after-load 'lsp-mode
+  (mapc #'lsp-flycheck-add-mode '(templ-mode html-mode css-mode))))
 
 (use-package lsp-ui
   :after lsp-mode
@@ -471,6 +450,22 @@
   (vertico-cycle t) ;; Enable cycling for `vertico-next/previous'
   :init
   (vertico-mode))
+
+;; Enable rich annotations using the Marginalia package
+(use-package marginalia
+  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+  ;; available in the *Completions* buffer, add it to the
+  ;; `completion-list-mode-map'.
+  :bind (:map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+
+  ;; The :init section is always executed.
+  :init
+
+  ;; Marginalia must be activated in the :init section of use-package such that
+  ;; the mode gets enabled right away. Note that this forces loading the
+  ;; package.
+  (marginalia-mode))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
@@ -549,6 +544,11 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
+  :custom
+  ;; Optionally configure the narrowing key.
+  ;; Both < and C-+ work reasonably well.
+  (consult-narrow-key "<") ;; "C-+"
+
   ;; Configure other variables and modes in the :config section,
   ;; after lazily loading the package.
   :config
@@ -569,9 +569,7 @@
    ;; :preview-key "M-."
    :preview-key '(:debounce 0 any))
 
-  ;; Optionally configure the narrowing key.
-  ;; Both < and C-+ work reasonably well.
-  (setq consult-narrow-key "<") ;; "C-+"
+  (evil-define-key 'normal 'global (kbd "<leader>ff") 'consult-find)
 
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
@@ -630,13 +628,15 @@
   :mode "\\.go\\'"
   :hook
   (go-ts-mode . lsp-deferred)
+  :custom
+  (go-ts-mode-indent-offset 4)
+  (treesit-font-lock-level 3)
   :init
   ;; because cannot put in :mode block
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
   :config
   (advice-add 'lsp-find-definition :after 'open-templ-from-compiled)
-  (advice-add 'lsp-find-definition :after (lambda () (message "ASDFASDFASDFASDF")))
-  (setq go-ts-mode-indent-offset 4))
+  (advice-add 'lsp-find-type-definition :after 'open-templ-from-compiled))
 
 (use-package templ-ts-mode
   :hook (templ-ts-mode . lsp-deferred)
@@ -644,6 +644,7 @@
   :init
   (require 'lsp-mode)
   (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "templ"))
+  (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "html"))
   (lsp-register-client (make-lsp-client
 						:new-connection (lsp-stdio-connection '("go" "tool" "templ" "lsp"))
 						:activation-fn (lsp-activate-on "templ")
@@ -726,8 +727,13 @@
 
 (use-package magit
   :defer (not my/force-load)
+  :init
+  (evil-define-key 'normal 'global (kbd "<leader>gg") 'magit)
   :custom
-  (git-commit-major-mode 'git-commit-ts-mode))
+  (git-commit-major-mode 'git-commit-ts-mode)
+  :config
+  (define-key magit-file-section-map (kbd "RET") 'magit-diff-visit-file-other-window)
+  (define-key magit-hunk-section-map (kbd "RET") 'magit-diff-visit-file-other-window))
 
 ;; =========================
 ;; ======== COMMAND ========
