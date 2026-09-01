@@ -17,6 +17,10 @@ vim.g.maplocalleader = "\\"
 --- Plugins ---
 ---------------
 
+vim.pack.add {
+  "https://github.com/tpope/vim-fugitive",
+}
+
 -----------
 --- LSP ---
 -----------
@@ -71,4 +75,12 @@ vim.keymap.set("i", "<TAB>", function ()
   end
 end)
 
+local function cmd(command)
+  return function ()
+    vim.cmd(command)
+  end
+end
+
 vim.keymap.set("n", "gl", vim.diagnostic.open_float)
+
+vim.keymap.set("n", "<leader>gg", cmd"Git")
