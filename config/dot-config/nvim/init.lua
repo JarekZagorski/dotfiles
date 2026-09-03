@@ -19,7 +19,15 @@ vim.g.maplocalleader = "\\"
 
 vim.pack.add {
   "https://github.com/tpope/vim-fugitive",
+  { src = "https://github.com/nvim-tree/nvim-web-devicons" },
+  { src = "https://github.com/ibhagwan/fzf-lua" },
 }
+
+local fzfLua = require("fzf-lua")
+fzfLua.setup({
+  -- "borderless-full",
+  "border-fused",
+})
 
 -----------
 --- LSP ---
