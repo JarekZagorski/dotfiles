@@ -36,7 +36,7 @@ fzfLua.setup({
 -- for configuration common in all files
 vim.lsp.config("*", {})
 
-vim.lsp.enable({"lua_ls"})
+vim.lsp.enable({ "lua_ls" })
 
 vim.lsp.config("lua_ls", {
   cmd = { "lua-language-server" },
@@ -56,7 +56,9 @@ vim.lsp.config("lua_ls", {
         checkThirdParty = false,
         library = {
           vim.env.VIMRUNTIME,
-        }
+          ---@diagnostic disable-next-line
+          unpack(vim.api.nvim_get_runtime_file("pack/", true)),
+        },
       },
     },
   },
@@ -67,7 +69,7 @@ vim.lsp.config("lua_ls", {
 ------------------
 
 -- Use CTRL-Y to select an item. |complete_CTRL-Y|
-vim.cmd[[set completeopt+=menuone,popup,preview,fuzzy]]
+vim.cmd [[set completeopt+=menuone,popup,preview,fuzzy,noinsert]]
 
 -- limits max number of candidates for completion
 vim.opt.pumheight = 12
@@ -76,19 +78,42 @@ vim.opt.pumheight = 12
 --- Keys ---
 ------------
 
-vim.keymap.set("i", "<TAB>", function ()
-  if vim.fn.pumvisible() == 0 then
-    vim.lsp.omnifunc(1, 1)
+vim.keymap.set("i", "<TAB>", function()
+  local y = vim.api.nvim_win_get_cursor(0)[2]
+  local line = vim.api.nvim_get_current_line()
+
+  local c = line:sub(y, y + 1)
+
+  if #c > 0 and not c:match("[%s\n]") then
+    if vim.fn.pumvisible() == 0 then
+      vim.print(c)
+      vim.lsp.omnifunc(1, 1)
+    else
+      vim.api.nvim_feedkeys(vim.keycode("<C-y>"), "n", true)
+    end
   else
+    return "<TAB>"
   end
-end)
+end, { expr = true })
 
-local function cmd(command)
-  return function ()
-    vim.cmd(command)
-  end
-end
+-- git
+vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
 
-vim.keymap.set("n", "gl", vim.diagnostic.open_float)
+-- search of various kinds
+vim.keymap.set("n", "<leader>ff", fzfLua.files, { desc = "File Finder" })
+vim.keymap.set("n", "fg", fzfLua.live_grep, { desc = "File Grep" })
 
-vim.keymap.set("n", "<leader>gg", cmd"Git")
+-- diagnostic
+vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Open diagnostics" })
+
+-- lsp
+-- vim.keymap.del("n", "gd")
+vim.keymap.set("n", "gdd", vim.lsp.buf.definition)
+vim.keymap.set("n", "gdt", vim.lsp.buf.type_definition)
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
+vim.keymap.set("n", "gs", vim.lsp.buf.signature_help)
+vim.keymap.set("n", "gr", vim.lsp.buf.references)
+
+vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
