@@ -1,0 +1,8 @@
+{
+  "workspace.library": [
+    "$VIMRUNTIME",
+    "$XDG_DATA_HOME/nvim/site/pack/core/opt/nvim-web-devicons",
+    "$XDG_DATA_HOME/nvim/site/pack/core/opt/fzf-lua"
+  ],
+  "runtime.version": "Lua 5.1"
+}

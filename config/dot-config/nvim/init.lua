@@ -23,9 +23,8 @@ vim.pack.add {
   { src = "https://github.com/ibhagwan/fzf-lua" },
 }
 
-local fzfLua = require("fzf-lua")
+local fzfLua = require("fzf-lua.init")
 fzfLua.setup({
-  -- "borderless-full",
   "border-fused",
 })
 
@@ -54,11 +53,6 @@ vim.lsp.config("lua_ls", {
       telemetry = { enable = false },
       workspace = {
         checkThirdParty = false,
-        library = {
-          vim.env.VIMRUNTIME,
-          ---@diagnostic disable-next-line
-          unpack(vim.api.nvim_get_runtime_file("pack/", true)),
-        },
       },
     },
   },
@@ -83,7 +77,6 @@ vim.keymap.set("i", "<TAB>", function()
   local line = vim.api.nvim_get_current_line()
 
   local c = line:sub(y, y + 1)
-
   if #c > 0 and not c:match("[%s\n]") then
     if vim.fn.pumvisible() == 0 then
       vim.print(c)
@@ -95,6 +88,9 @@ vim.keymap.set("i", "<TAB>", function()
     return "<TAB>"
   end
 end, { expr = true })
+vim.keymap.set("i", "<C-f>", function ()
+  vim.lsp.omnifunc(1, 1)
+end)
 
 -- git
 vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
@@ -107,7 +103,6 @@ vim.keymap.set("n", "fg", fzfLua.live_grep, { desc = "File Grep" })
 vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Open diagnostics" })
 
 -- lsp
--- vim.keymap.del("n", "gd")
 vim.keymap.set("n", "gdd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gdt", vim.lsp.buf.type_definition)
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
@@ -117,3 +112,5 @@ vim.keymap.set("n", "gr", vim.lsp.buf.references)
 
 vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format)
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
+
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
