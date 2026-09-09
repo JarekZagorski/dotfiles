@@ -33,29 +33,18 @@ fzfLua.setup({
 -----------
 
 -- for configuration common in all files
-vim.lsp.config("*", {})
-
-vim.lsp.enable({ "lua_ls" })
-
-vim.lsp.config("lua_ls", {
-  cmd = { "lua-language-server" },
-  filetypes = { "lua" },
-  root_markers = { { ".luarc.json", ".luarc.jsonc" }, ".git" },
-
+vim.lsp.config("*", {
   on_attach = function(client, bufnr)
     vim.lsp.completion.enable(true, client.id, bufnr, {
       autotrigger = false,
     })
   end,
+})
 
-  settings = {
-    Lua = {
-      telemetry = { enable = false },
-      workspace = {
-        checkThirdParty = false,
-      },
-    },
-  },
+vim.lsp.enable({
+  "lua_ls",
+  "gopls",
+  "clangd",
 })
 
 ------------------
