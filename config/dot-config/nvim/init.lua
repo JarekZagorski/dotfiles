@@ -21,12 +21,21 @@ vim.pack.add {
   "https://github.com/tpope/vim-fugitive",
   { src = "https://github.com/nvim-tree/nvim-web-devicons" },
   { src = "https://github.com/ibhagwan/fzf-lua" },
+  { src = "https://github.com/ledger/vim-ledger" },
 }
 
+-- fzf-lua
 local fzfLua = require("fzf-lua.init")
 fzfLua.setup({
   "border-fused",
 })
+
+-- ledger
+vim.g.ledger_bin = "ledger"
+vim.g.ledger_main = '%:p'
+-- vim.g.ledger_accounts_cmd = "ledger accounts"
+-- vim.g.ledger_descriptions_cmd = "ledger payees"
+vim.g.ledger_fuzzy_account_completion = 1
 
 -----------
 --- LSP ---
@@ -47,6 +56,10 @@ vim.lsp.enable({
   "clangd",
 })
 
+vim.lsp.config("clangd", {
+  cmd = { "clangd", "--background-index", "--clang-tidy" },
+})
+
 ------------------
 --- Completion ---
 ------------------
@@ -61,23 +74,34 @@ vim.opt.pumheight = 12
 --- Keys ---
 ------------
 
-vim.keymap.set("i", "<TAB>", function()
-  local y = vim.api.nvim_win_get_cursor(0)[2]
-  local line = vim.api.nvim_get_current_line()
+---For replacing certain <C-x>... keymaps.
+---@param keys string
+local function feedkeys(keys)
+  vim.api.nvim_feedkeys(vim.keycode(keys), 'n', true)
+end
 
-  local c = line:sub(y, y + 1)
-  if #c > 0 and not c:match("[%s\n]") then
-    if vim.fn.pumvisible() == 0 then
-      vim.print(c)
-      vim.lsp.omnifunc(1, 1)
+---@param cmp function
+local function completeFunc(cmp)
+  return function()
+    local y = vim.api.nvim_win_get_cursor(0)[2]
+    local line = vim.api.nvim_get_current_line()
+
+    local c = line:sub(y, y + 1)
+    if #c > 0 and not c:match("[%s\n]") then
+      if vim.fn.pumvisible() == 0 then
+        -- vim.lsp.omnifunc(1, 1)
+        feedkeys '<C-x><C-o>'
+      else
+        feedkeys "<C-y>"
+      end
     else
-      vim.api.nvim_feedkeys(vim.keycode("<C-y>"), "n", true)
+      return "<TAB>"
     end
-  else
-    return "<TAB>"
   end
-end, { expr = true })
-vim.keymap.set("i", "<C-f>", function ()
+end
+
+vim.keymap.set("i", "<TAB>", completeFunc(vim.lsp.omnifunc), { expr = true })
+vim.keymap.set("i", "<C-f>", function()
   vim.lsp.omnifunc(1, 1)
 end)
 
